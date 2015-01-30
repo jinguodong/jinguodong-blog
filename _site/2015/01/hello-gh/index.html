@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="guodong.j" />
-    <title>Facebook Pop 使用指南 | guodong.j</title>
+    <title>开始Git Pages | guodong.j</title>
     <link href="data:image/x-icon;base64,AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAD/APr59wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIiIiIiIiAAAiIiIiIiIAACIiIiIiIgERERERERIiAREREREREiIBERERERESIgERIiIiERIiAREiIiIREiIBESIhERESIgERIiERERIiAREiIiIiIiIBESIiIiIiIgERIiIiIiIiAREREREREAABEREREREQAAERERERERAADgAQAA4AEAAOABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA8AAAAPAAAADwAA" rel="icon" type="image/x-icon" />
     <link href="/feed/" rel="alternate" title="guodong.j" type="application/atom+xml" />
     
@@ -26,18 +26,22 @@
           <a href="/jinguodong-blog/about" class="ss-icon" title="About" >user</a>
           <a href="/jinguodong-blog/feed" class="ss-icon" title="Subscribe by RSS" >rss</a>
         </div>
-        <h1>Facebook Pop 使用指南</h1>
+        <h1>开始Git Pages</h1>
         </header>
         <hr>
         <article class="content">
         <section class="post">
-<p>当听闻Facebook要开源自己的Animation框架的时候，我还以为是基于Core Animation进行的封装，包含了一些动画效果库。等源码真正出来后，才发现完全想错了，Facebook Pop其实是基于CADisplayLink(Mac平台上使用的CVDisplayLink)实现的独立于Core Animation之外的动画方案。这里就不细说其实现原理了，主要讲讲Facebook Pop如何使用。</p>
+<p>这几天无论读书还是写技术笔记都是使用有道云笔记，但是在排版问题上，云笔记需要认为的去设置排版，写笔记很不方便，所以希望能有一个只让我注重内容的工具，这时候想到了很久之前搞得Github pages工具了。</p>
 
-<h2>一.基本概念</h2>
+<p>首先是入门，http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html，这个电子文献介绍了github pages的基本功能和规范，我是照着弄得，成功。</p>
 
-<p>在计算机的世界里面，其实并不存在绝对连续的动画，你所看到的屏幕上的动画本质上都是离散的，只是在一秒的时间里面离散的帧多到一定的数量人眼就觉得是连续的了，在iOS中，最大的帧率是60帧每秒。
-iOS提供了Core Animation框架，只需要开发者提供关键帧信息，比如提供某个animatable属性终点的关键帧信息，然后中间的值则通过一定的算法进行插值计算，从而实现补间动画。 Core Aniamtion中进行插值计算所依赖的时间曲线由CAMediaTimingFunction提供。
-Pop Animation在使用上和Core Animation很相似，都涉及Animation对象以及Animation的载体的概念，不同的是Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象。当然大多数情况Animation都是界面上显示的可视的效果，所以动画执行的载体一般都直接或者间接是UIView或者CALayer。但是如果你只是想研究Pop Animation的变化曲线，你也完全可以将其应用于一个普通的数据对象，比如下面这个对象:</p>
+<p>然后参考这令一个电子文献，研究了下github pages+jekyll工具的基本原理，见：http://www.pchou.info/web-build/2013/01/05/build-github-blog-page-04.html</p>
+
+<p>然后在网上找了一个模板，模板的链接忘掉了，有机会添加上来。</p>
+
+<h2>一.学习jekyll模板</h2>
+
+<p>jekyll可以提供markdown的支持，所以现在也要学习一下markdown的编写知识。</p>
 
 <pre><code>&lt;a href='https://github.com/interface' class='user-mention'&gt;@interface&lt;/a&gt; AnimatableModel : NSObject
 &lt;a href='https://github.com/property' class='user-mention'&gt;@property&lt;/a&gt; (nonatomic,assign) CGFloat animatableValue;
@@ -57,7 +61,7 @@ Pop Animation在使用上和Core Animation很相似，都涉及Animation对象�
 
 <p>由于此对象的属性不在Pop Property的标准属性中，所以需要创建一个POPAnimatableProperty，</p>
 
-<pre><code>  POPAnimatableProperty *animatableProperty = [POPAnimatableProperty propertyWithName:@"com.geeklu.animatableValue" initializer:^(POPMutableAnimatableProperty *prop) {
+<pre><code>POPAnimatableProperty *animatableProperty = [POPAnimatableProperty propertyWithName:@"com.geeklu.animatableValue" initializer:^(POPMutableAnimatableProperty *prop) {
     prop.writeBlock = ^(id obj, const CGFloat values[]) {
         [obj setAnimatableValue:values[0]];
     };
@@ -207,7 +211,7 @@ Pop Animation可以应用任何NSObject的对象，而Core Aniamtion必须是CAL
 </span>
 <span class="time">
   /
-  <time datetime="2014-05-22">2014-05-22</time>
+  <time datetime="2015-01-27">2015-01-27</time>
 </span>
 <br />
 <span class="license">
@@ -217,7 +221,7 @@ Pop Animation可以应用任何NSObject的对象，而Core Aniamtion必须是CAL
 <span class="categories">
   in categories
   
-  <a href="/jinguodong-blog/categories/#programming" title="programming">programming</a>&nbsp;
+  <a href="/jinguodong-blog/categories/#记录" title="记录">记录</a>&nbsp;
   
 </span>
 
@@ -225,9 +229,9 @@ Pop Animation可以应用任何NSObject的对象，而Core Aniamtion必须是CAL
 <span class="tags">
   tagged with 
   
-  <a href="/jinguodong-blog/tags/#facebook" title="facebook">facebook</a>&nbsp;
+  <a href="/jinguodong-blog/tags/#git pages" title="git pages">git pages</a>&nbsp;
   
-  <a href="/jinguodong-blog/tags/#pop" title="pop">pop</a>&nbsp;
+  <a href="/jinguodong-blog/tags/#blog" title="blog">blog</a>&nbsp;
   
 </span>
 
@@ -237,7 +241,7 @@ Pop Animation可以应用任何NSObject的对象，而Core Aniamtion必须是CAL
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'jinguodong'; // required: replace example with your forum shortname
-    var disqus_url = '/jinguodong-blog/2014/05/facebook-pop-usage/';
+    var disqus_url = '/jinguodong-blog/2015/01/hello-gh/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -255,12 +259,12 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             
-        url = '/jinguodong-blog/2014/05/custom-container-view-controller/';
+        url = '/jinguodong-blog/2014/11/start-GitPages/';
         
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
-        url = '/jinguodong-blog/2014/11/hello-world/';
+        url = '/jinguodong-blog/2015/01/markdown-stackedit/';
         
         }
         if (url) {

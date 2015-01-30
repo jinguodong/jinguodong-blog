@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="guodong.j" />
-    <title>links | guodong.j</title>
+    <title>Markdown语法学习笔记 | guodong.j</title>
     <link href="data:image/x-icon;base64,AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAD/APr59wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIiIiIiIiAAAiIiIiIiIAACIiIiIiIgERERERERIiAREREREREiIBERERERESIgERIiIiERIiAREiIiIREiIBESIhERESIgERIiERERIiAREiIiIiIiIBESIiIiIiIgERIiIiIiIiAREREREREAABEREREREQAAERERERERAADgAQAA4AEAAOABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA8AAAAPAAAADwAA" rel="icon" type="image/x-icon" />
     <link href="/feed/" rel="alternate" title="guodong.j" type="application/atom+xml" />
     
@@ -26,21 +26,76 @@
           <a href="/jinguodong-blog/about" class="ss-icon" title="About" >user</a>
           <a href="/jinguodong-blog/feed" class="ss-icon" title="Subscribe by RSS" >rss</a>
         </div>
-        <h1>links</h1>
+        <h1>Markdown语法学习笔记</h1>
         </header>
         <hr>
         <article class="content">
         <section class="post">
-<p>暂无</p>
+<p>Github pages功能可以用来编写个人博客或者项目主页，能够帮助使用者将集中力放在内容本身，个人认为这项功能很好的满足了我的需求，所以花了2天时间研究了一下，github pages工具的入门和本地环境的搭建，大家可以参考 @开始Git Pages</p>
+
+<h2>markdown问题记录</h2>
+
+<ol>
+<li>将本站内的链接到本文</li>
+<li>图片添加的方法</li>
+<li>有序链表</li>
+<li>无序链表</li>
+<li>块区引用的作用和方法</li>
+</ol>
+
+
+<h2>markdown 基本语法</h2>
+
+<ol>
+<li><p>标题设置</p>
+
+<p> 在markdown中设置标题有两种方法：</p>
+
+<ul>
+<li>通过在文字下方添加“=”和“-”，他们分别表示一级标题和二级标题。</li>
+<li>在文字开头添加“#”，通过“#”的书来能够表示几级标题。</li>
+</ul>
+</li>
+<li><p>块注释（blockquote)</p></li>
+</ol>
+
 
 </section>
+<section class="meta">
+<span class="author">
+  <a href="http://geeklu.com">guodong.j</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2015-01-27">2015-01-27</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
 
+<span class="categories">
+  in categories
+  
+  <a href="/jinguodong-blog/categories/#语言学习" title="语言学习">语言学习</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="/jinguodong-blog/tags/#markdown" title="markdown">markdown</a>&nbsp;
+  
+</span>
+
+</section>
 <section class="comment">
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'jinguodong'; // required: replace example with your forum shortname
-    var disqus_url = '/jinguodong-blog/links/';
+    var disqus_url = '/jinguodong-blog/2015/01/markdown-study/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -52,7 +107,26 @@
 </section>
 
 
-
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = '/jinguodong-blog/2015/01/markdown-stackedit/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = '/jinguodong-blog/2015/01/markdown-syntax/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
 
 
         </article>

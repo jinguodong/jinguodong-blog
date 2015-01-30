@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="guodong.j" />
+    <title>Markdown语法说明（完整版） | guodong.j</title>
+    <link href="data:image/x-icon;base64,AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAD/APr59wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIiIiIiIiAAAiIiIiIiIAACIiIiIiIgERERERERIiAREREREREiIBERERERESIgERIiIiERIiAREiIiIREiIBESIhERESIgERIiERERIiAREiIiIiIiIBESIiIiIiIgERIiIiIiIiAREREREREAABEREREREQAAERERERERAADgAQAA4AEAAOABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA8AAAAPAAAADwAA" rel="icon" type="image/x-icon" />
+    <link href="/feed/" rel="alternate" title="guodong.j" type="application/atom+xml" />
+    
+    <link rel="stylesheet" href="/jinguodong-blog/media/css/highlight.css">
+    <link href='/jinguodong-blog/media/webfonts/ss-social.css' rel='stylesheet'>
+    <link href='/jinguodong-blog/media/webfonts/ss-standard.css' rel='stylesheet'>
+    <link href="/jinguodong-blog/media/css/screen.css" rel="stylesheet">
+
+    <script type="text/javascript" src="/jinguodong-blog/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <div class="buttons">
+          <a href="/jinguodong-blog/" class="ss-icon" title="Go to homepage">home</a>
+          <a href="/jinguodong-blog/categories" class="ss-icon" title="Category" >list</a>
+          <a href="/jinguodong-blog/tags" class="ss-icon" title="Tag Cloud" >tags</a>
+          <a href="/jinguodong-blog/guestbook" class="ss-icon" title="Guest Book" >talk</a>
+          <a href="/jinguodong-blog/about" class="ss-icon" title="About" >user</a>
+          <a href="/jinguodong-blog/feed" class="ss-icon" title="Subscribe by RSS" >rss</a>
+        </div>
+        <h1>Markdown语法说明（完整版）</h1>
+        </header>
+        <hr>
+        <article class="content">
+        <section class="post">
+<p>&lt;&lt; <a href="http://wowubuntu.com">访问 Wow!Ubuntu</a></p>
+
+<p><strong>声明：</strong> 这份文档派生(fork)于<a href="http://markdown.tw/">繁体中文版</a>，在此基础上进行了繁体转简体工作，并进行了适当的润色。此文档用 Markdown 语法编写，你可以到这里<a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/basics.md">查看它的源文件</a>。「繁体中文版的原始文件可以<a href="https://github.com/othree/markdown-syntax-zhtw/blob/master/basics.md">查看这里</a>」--By @<a href="http://twitter.com/riku">riku</a></p>
+
+<p><strong>注：</strong> 本项目托管于 <a href="http://gitcafe.com/riku/Markdown-Syntax-CN/">GitCafe</a>上，请通过"派生"和"合并请求"来帮忙改进本项目。</p>
+
+<h1>Markdown: Basics （快速入门） / (<a href="./index.html">点击查看完整语法说明</a>)</h1>
+
+<h2>Getting the Gist of Markdown's Formatting Syntax</h2>
+
+<p>此页提供了 Markdown 的简单概念， <a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/syntax.md" title="Markdown Syntax">语法说明</a> 页提供了完整详细的文档，说明了每项功能。但是 Markdown 其实很简单就可以上手，此页文档提供了一些范例，并且每个范例都会提供输出的 HTML 结果。</p>
+
+<p>其实直接试试看也是一个很不错的方法， <a href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Dingus">Dingus</a> 是一个网页应用程序，你可以把自已编写的 Markdown 文档转成 XHTML。</p>
+
+<h2>段落、标题、区块代码</h2>
+
+<p>一个段落是由一个以上的连接的行句组成，而一个以上的空行则会划分出不同的段落（空行的定义是显示上看起来像是空行，就被视为空行，例如有一行只有空白和 tab，那该行也会被视为空行），一般的段落不需要用空白或换行缩进。</p>
+
+<p>Markdown 支持两种标题的语法，<a href="http://docutils.sourceforge.net/mirror/setext.html">Setext</a> 和 <a href="http://www.aaronsw.com/2002/atx/">atx</a> 形式。Setext 形式是用底线的形式，利用 <code>=</code> （最高阶标题）和 <code>-</code> （第二阶标题），Atx 形式在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶。</p>
+
+<p>区块引用则使用 email 形式的 '<code>&gt;</code>' 角括号。</p>
+
+<p>Markdown 语法:</p>
+
+<pre><code>A First Level Header
+====================
+A Second Level Header
+---------------------
+
+Now is the time for all good men to come to
+the aid of their country. This is just a
+regular paragraph.
+
+The quick brown fox jumped over the lazy
+dog's back.
+### Header 3
+
+&gt; This is a blockquote.
+&gt; 
+&gt; This is the second paragraph in the blockquote.
+&gt;
+&gt; ## This is an H2 in a blockquote
+</code></pre>
+
+<p>输出 HTML 为：</p>
+
+<pre><code>&lt;h1&gt;A First Level Header&lt;/h1&gt;
+&lt;h2&gt;A Second Level Header&lt;/h2&gt;
+&lt;p&gt;Now is the time for all good men to come to
+the aid of their country. This is just a
+regular paragraph.&lt;/p&gt;
+&lt;p&gt;The quick brown fox jumped over the lazy
+dog's back.&lt;/p&gt;
+&lt;h3&gt;Header 3&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is a blockquote.&lt;/p&gt;
+&lt;p&gt;This is the second paragraph in the blockquote.&lt;/p&gt;
+&lt;h2&gt;This is an H2 in a blockquote&lt;/h2&gt;
+&lt;/blockquote&gt;
+</code></pre>
+
+<h3>修辞和强调</h3>
+
+<p>Markdown 使用星号和底线来标记需要强调的区段。</p>
+
+<p>Markdown 语法:</p>
+
+<pre><code>Some of these words *are emphasized*.
+Some of these words _are emphasized also_.
+Use two asterisks for **strong emphasis**.
+Or, if you prefer, __use two underscores instead__.
+</code></pre>
+
+<p>输出 HTML 为:</p>
+
+<pre><code>&lt;p&gt;Some of these words &lt;em&gt;are emphasized&lt;/em&gt;.
+Some of these words &lt;em&gt;are emphasized also&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Use two asterisks for &lt;strong&gt;strong emphasis&lt;/strong&gt;.
+Or, if you prefer, &lt;strong&gt;use two underscores instead&lt;/strong&gt;.&lt;/p&gt;
+</code></pre>
+
+<h2>列表</h2>
+
+<p>无序列表使用星号、加号和减号来做为列表的项目标记，这些符号是都可以使用的，使用星号：</p>
+
+<pre><code>* Candy.
+* Gum.
+* Booze.
+</code></pre>
+
+<p>加号：</p>
+
+<pre><code>+ Candy.
++ Gum.
++ Booze.
+</code></pre>
+
+<p>和减号</p>
+
+<pre><code>- Candy.
+- Gum.
+- Booze.
+</code></pre>
+
+<p>都会输出 HTML 为：</p>
+
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Candy.&lt;/li&gt;
+&lt;li&gt;Gum.&lt;/li&gt;
+&lt;li&gt;Booze.&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>有序的列表则是使用一般的数字接着一个英文句点作为项目标记：</p>
+
+<pre><code>1. Red
+2. Green
+3. Blue
+</code></pre>
+
+<p>输出 HTML 为：</p>
+
+<pre><code>&lt;ol&gt;
+&lt;li&gt;Red&lt;/li&gt;
+&lt;li&gt;Green&lt;/li&gt;
+&lt;li&gt;Blue&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+
+<p>如果你在项目之间插入空行，那项目的内容会用 <code>&lt;p&gt;</code> 包起来，你也可以在一个项目内放上多个段落，只要在它前面缩排 4 个空白或 1 个 tab 。</p>
+
+<pre><code>* A list item.
+
+    With multiple paragraphs.
+
+* Another item in the list.
+</code></pre>
+
+<p>输出 HTML 为：</p>
+
+<pre><code>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A list item.&lt;/p&gt;
+&lt;p&gt;With multiple paragraphs.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Another item in the list.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<h3>链接</h3>
+
+<p>Markdown 支援两种形式的链接语法： <em>行内</em> 和 <em>参考</em> 两种形式，两种都是使用角括号来把文字转成连结。</p>
+
+<p>行内形式是直接在后面用括号直接接上链接：</p>
+
+<pre><code>This is an [example link](http://example.com/).
+</code></pre>
+
+<p>输出 HTML 为：</p>
+
+<pre><code>&lt;p&gt;This is an &lt;a href="http://example.com/"&gt;
+example link&lt;/a&gt;.&lt;/p&gt;
+</code></pre>
+
+<p>你也可以选择性的加上 title 属性：</p>
+
+<pre><code>This is an [example link](http://example.com/ "With a Title").
+</code></pre>
+
+<p>输出 HTML 为：</p>
+
+<pre><code>&lt;p&gt;This is an &lt;a href="http://example.com/" title="With a Title"&gt;
+example link&lt;/a&gt;.&lt;/p&gt;
+</code></pre>
+
+<p>参考形式的链接让你可以为链接定一个名称，之后你可以在文件的其他地方定义该链接的内容：</p>
+
+<pre><code>I get 10 times more traffic from [Google][1] than from
+[Yahoo][2] or [MSN][3].
+
+[1]: http://google.com/ "Google"
+[2]: http://search.yahoo.com/ "Yahoo Search"
+[3]: http://search.msn.com/ "MSN Search"
+</code></pre>
+
+<p>输出 HTML 为：</p>
+
+<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href="http://google.com/"
+title="Google"&gt;Google&lt;/a&gt; than from &lt;a href="http://search.yahoo.com/"
+title="Yahoo Search"&gt;Yahoo&lt;/a&gt; or &lt;a href="http://search.msn.com/"
+title="MSN Search"&gt;MSN&lt;/a&gt;.&lt;/p&gt;
+</code></pre>
+
+<p>title 属性是选择性的，链接名称可以用字母、数字和空格，但是不分大小写：</p>
+
+<pre><code>I start my morning with a cup of coffee and
+[The New York Times][NY Times].
+
+[ny times]: http://www.nytimes.com/
+</code></pre>
+
+<p>输出 HTML 为：</p>
+
+<pre><code>&lt;p&gt;I start my morning with a cup of coffee and
+&lt;a href="http://www.nytimes.com/"&gt;The New York Times&lt;/a&gt;.&lt;/p&gt;
+</code></pre>
+
+<h3>图片</h3>
+
+<p>图片的语法和链接很像。</p>
+
+<p>行内形式（title 是选择性的）：</p>
+
+<pre><code>![alt text](/path/to/img.jpg "Title")
+</code></pre>
+
+<p>参考形式：</p>
+
+<pre><code>![alt text][id]
+
+[id]: /path/to/img.jpg "Title"
+</code></pre>
+
+<p>上面两种方法都会输出 HTML 为：</p>
+
+<pre><code>&lt;img src="/path/to/img.jpg" alt="alt text" title="Title" /&gt;
+</code></pre>
+
+<h3>代码</h3>
+
+<p>在一般的段落文字中，你可以使用反引号 <code>`</code> 来标记代码区段，区段内的 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 都会被自动的转换成 HTML 实体，这项特性让你可以很容易的在代码区段内插入 HTML 码：</p>
+
+<pre><code>I strongly recommend against using any `&lt;blink&gt;` tags.
+
+I wish SmartyPants used named entities like `&amp;mdash;`
+instead of decimal-encoded entites like `&amp;#8212;`.
+</code></pre>
+
+<p>输出 HTML 为：</p>
+
+<pre><code>&lt;p&gt;I strongly recommend against using any
+&lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
+&lt;p&gt;I wish SmartyPants used named entities like
+&lt;code&gt;&amp;amp;mdash;&lt;/code&gt; instead of decimal-encoded
+entites like &lt;code&gt;&amp;amp;#8212;&lt;/code&gt;.&lt;/p&gt;
+</code></pre>
+
+<p>如果要建立一个已经格式化好的代码区块，只要每行都缩进 4 个空格或是一个 tab 就可以了，而 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 也一样会自动转成 HTML 实体。</p>
+
+<p>Markdown 语法:</p>
+
+<pre><code>If you want your page to validate under XHTML 1.0 Strict,
+you've got to put paragraph tags in your blockquotes:
+
+&lt;blockquote&gt;
+&lt;p&gt;For example.&lt;/p&gt;
+&lt;/blockquote&gt;
+</code></pre>
+
+<p>输出 HTML 为：</p>
+
+<pre><code>&lt;p&gt;If you want your page to validate under XHTML 1.0 Strict,
+you've got to put paragraph tags in your blockquotes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;blockquote&amp;gt;
+&amp;lt;p&amp;gt;For example.&amp;lt;/p&amp;gt;
+&amp;lt;/blockquote&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://geeklu.com">guodong.j</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2015-01-27">2015-01-27</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="/jinguodong-blog/categories/#语言学习" title="语言学习">语言学习</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="/jinguodong-blog/tags/#markdown" title="markdown">markdown</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'jinguodong'; // required: replace example with your forum shortname
+    var disqus_url = '/jinguodong-blog/2015/01/markdown-syntax-simple/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = '/jinguodong-blog/2015/01/markdown-syntax-record/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> | Copyright 2014 - 2015 by <a href="http://jinguodong.github.com/jinguodong-blog/about/">JinGuodong</a> | <span class="label label-info">2015-01-30 10:33:32 �й���׼ʱ��</span></small></p>
+    </footer>
+
+    </div>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-57094722-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>
