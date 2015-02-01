@@ -37,11 +37,17 @@
 
 <p>然后参考这令一个电子文献，研究了下github pages+jekyll工具的基本原理，见：http://www.pchou.info/web-build/2013/01/05/build-github-blog-page-04.html</p>
 
-<p>然后在网上找了一个模板，模板的链接忘掉了，有机会添加上来。</p>
+<p>然后在网上找了一个模板，模板的链接忘掉了，有机会添加上来。
+使用jekyll serve命令运行提示我jekyll/version cannot load such file。
+后来使用bundle exec jekyll serve解决了这个问题。但是后来使用使用bundle exec jekyll serve出现了另一个问题，就是Generating完了之后，提示done就直接退出了，没有启动本地环境服务。</p>
 
 <h2>一.学习jekyll模板</h2>
 
 <p>jekyll可以提供markdown的支持，所以现在也要学习一下markdown的编写知识。</p>
+
+<p>bundle exec jekyll serve命令时常出问题？
+解决方案:
+bundle exec jekyll server --safe --watch.</p>
 
 <pre><code>&lt;a href='https://github.com/interface' class='user-mention'&gt;@interface&lt;/a&gt; AnimatableModel : NSObject
 &lt;a href='https://github.com/property' class='user-mention'&gt;@property&lt;/a&gt; (nonatomic,assign) CGFloat animatableValue;
@@ -279,7 +285,7 @@ $(function(){
       </div>
 
     <footer>
-        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> | Copyright 2014 - 2015 by <a href="http://jinguodong.github.com/jinguodong-blog/about/">JinGuodong</a> | <span class="label label-info">2015-01-30 10:33:32 �й���׼ʱ��</span></small></p>
+        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> | Copyright 2014 - 2015 by <a href="http://jinguodong.github.com/jinguodong-blog/about/">JinGuodong</a> | <span class="label label-info">2015-02-01 20:54:22 �й���׼ʱ��</span></small></p>
     </footer>
 
     </div>

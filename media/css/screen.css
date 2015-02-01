@@ -47,6 +47,13 @@ ol, ul {
 blockquote, q {
 	quotes: none;
 }
+blockquote{
+    padding-left: 40px;
+    background-color: aliceblue;
+    border-left: 7px solid;
+    border-color: beige;
+}
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';

@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="guodong.j" />
-    <title>靳国栋的主页 | guodong.j</title>
+    <title>JavaScript DOM编程艺术 | guodong.j</title>
     <link href="data:image/x-icon;base64,AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAD/APr59wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIiIiIiIiAAAiIiIiIiIAACIiIiIiIgERERERERIiAREREREREiIBERERERESIgERIiIiERIiAREiIiIREiIBESIhERESIgERIiERERIiAREiIiIiIiIBESIiIiIiIgERIiIiIiIiAREREREREAABEREREREQAAERERERERAADgAQAA4AEAAOABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA8AAAAPAAAADwAA" rel="icon" type="image/x-icon" />
     <link href="/feed/" rel="alternate" title="guodong.j" type="application/atom+xml" />
     
@@ -26,119 +26,100 @@
           <a href="/jinguodong-blog/about" class="ss-icon" title="About" >user</a>
           <a href="/jinguodong-blog/feed" class="ss-icon" title="Subscribe by RSS" >rss</a>
         </div>
-        <h1>靳国栋的主页</h1>
+        <h1>JavaScript DOM编程艺术</h1>
         </header>
         <hr>
         <article class="content">
         <section class="post">
-<ul class="listing">
+<h2>第一章 JavaScript简史</h2>
 
-  
-  
-    
-    <li class="listing-seperator">2015</li>
-  
-  <li class="listing-item">
-    <time datetime="2015-02-01">2015-02-01</time>
-    <a href="/jinguodong-blog//2015/02/JS-DOM/" title="JavaScript DOM编程艺术">JavaScript DOM编程艺术</a>
-  </li>
+<h3>JavaScript的由来：</h3>
 
-  
-  
-  <li class="listing-item">
-    <time datetime="2015-01-27">2015-01-27</time>
-    <a href="/jinguodong-blog//2015/01/markdown-syntax-simple/" title="Markdown语法说明（完整版）">Markdown语法说明（完整版）</a>
-  </li>
+<pre><code>由Netscape与Sun公司合作开发，也叫做ECMAScript语言。
+</code></pre>
 
-  
-  
-  <li class="listing-item">
-    <time datetime="2015-01-27">2015-01-27</time>
-    <a href="/jinguodong-blog//2015/01/markdown-syntax-record/" title="Markdown语法说明笔记">Markdown语法说明笔记</a>
-  </li>
+<h3>DHTML(HTML+CSS+JS)</h3>
 
-  
-  
-  <li class="listing-item">
-    <time datetime="2015-01-27">2015-01-27</time>
-    <a href="/jinguodong-blog//2015/01/markdown-syntax/" title="Markdown语法说明（完整版）">Markdown语法说明（完整版）</a>
-  </li>
+<p>背后的含义：</p>
 
-  
-  
-  <li class="listing-item">
-    <time datetime="2015-01-27">2015-01-27</time>
-    <a href="/jinguodong-blog//2015/01/markdown-study/" title="Markdown语法学习笔记">Markdown语法学习笔记</a>
-  </li>
+<blockquote><ol>
+<li>利用HTML把网页标记为各种元素。</li>
+<li>利用CSS设置元素样式和它们的显示位置。</li>
+<li>利用JSavaScript实时地操控页面和改变样式。</li>
+</ol>
+</blockquote>
 
-  
-  
-  <li class="listing-item">
-    <time datetime="2015-01-27">2015-01-27</time>
-    <a href="/jinguodong-blog//2015/01/markdown-stackedit/" title="stackedit">stackedit</a>
-  </li>
+<h3>DOM(文档对象模型)</h3>
 
-  
-  
-  <li class="listing-item">
-    <time datetime="2015-01-27">2015-01-27</time>
-    <a href="/jinguodong-blog//2015/01/hello-gh/" title="开始Git Pages">开始Git Pages</a>
-  </li>
-
-  
-  
-    
-    <li class="listing-seperator">2014</li>
-  
-  <li class="listing-item">
-    <time datetime="2014-11-25">2014-11-25</time>
-    <a href="/jinguodong-blog//2014/11/start-GitPages/" title="Start - GitPages">Start - GitPages</a>
-  </li>
-
-  
-  
-  <li class="listing-item">
-    <time datetime="2014-11-25">2014-11-25</time>
-    <a href="/jinguodong-blog//2014/11/hello-world/" title="JGD - hello, world">JGD - hello, world</a>
-  </li>
-
-  
-  
-  <li class="listing-item">
-    <time datetime="2014-05-22">2014-05-22</time>
-    <a href="/jinguodong-blog//2014/05/facebook-pop-usage/" title="Facebook Pop 使用指南">Facebook Pop 使用指南</a>
-  </li>
-
-  
-  
-  <li class="listing-item">
-    <time datetime="2014-05-08">2014-05-08</time>
-    <a href="/jinguodong-blog//2014/05/custom-container-view-controller/" title="Custom Container View Controller">Custom Container View Controller</a>
-  </li>
-
-</ul>
-
-<div id="post-pagination" class="paginator">
-
-  
-    <span class="previous disabled"><前页</span>
-  
-
-      
-      <span class="current-page">1</span>
-      
-
-    
-
-  
-    <span class="next disabled" >后页></span>
-  
-  (共11篇)
-</div>
-
+<p>DOM是一种API，一个与系统平台和编程语言无关的接口。</p>
 
 </section>
+<section class="meta">
+<span class="author">
+  <a href="http://geeklu.com">guodong.j</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2015-02-01">2015-02-01</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
 
+<span class="categories">
+  in categories
+  
+  <a href="/jinguodong-blog/categories/#图灵序列" title="图灵序列">图灵序列</a>&nbsp;
+  
+  <a href="/jinguodong-blog/categories/#编程语言" title="编程语言">编程语言</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="/jinguodong-blog/tags/#JavaScript" title="JavaScript">JavaScript</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'jinguodong'; // required: replace example with your forum shortname
+    var disqus_url = '/jinguodong-blog/2015/02/JS-DOM/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = '/jinguodong-blog/2015/01/markdown-syntax-simple/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
 
 
         </article>
