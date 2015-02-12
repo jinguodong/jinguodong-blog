@@ -76,6 +76,25 @@ JavaScript有以下三个不同的部分组成：
 3. 流控制语句
 4. 函数
 
+### 带着问题学习
+
+1. 函数的定义：
+
+    基本形式：
+    function funcName(arg1, arg2){
+        statements
+    }
+    理解参数：
+    1. 函数体内可以通过arguments对象来访问这个参数数组，从而获取传递给函数的每一个参数
+    2. 没有传递值的命名参数将自动被赋予undefined值（定义了变量但是没有初始化）。
+
+2. for in 循环的使用：
+
+    for-in是一种精准的迭代语句，用来枚举对象的属性。
+    for (var param_name in expression){
+        statements;
+    }
+
     ？？？后续补充
 
 
@@ -188,11 +207,205 @@ JavaScript有以下三个不同的部分组成：
 2. 使用事件处理程序
 3. 不同的事件类型
 
+### 事件流
+
+    事件流概念分为两种：事件冒泡流（被普遍支持）；事件捕获流。
+
+#### DOM事件流
+
+![][pic1]
+
+[pic1]: http://www.17jquery.com/uploads/allimg/c110106/12942Y5150Z-550T.jpg
+
+### 事件处理程序
+
+#### HTML事件处理程序：
+
+    <input type="button" value="Click Me" on click="alert('Clicked')" />
+    由于onclick特性将JavaScript代码作为其值来定义的。因此不能在其中使用未经转义的HTML语法字符，如：&, "", <, >。
+
+1. 这样指定事件处理程序具有一些独到之处。首先，会创建一个封装着元素属性值的函数。这个函数中有一个局部变量event，也就是事件对象。
+
+    <input type="button" value="click me", onclick="alert(event.type)"/>
+
+2. 在这个函数内部，this值等于事件的目标元素。
+3. 关于这个动态创建的函数，另一个有意思的地方是它扩展作用域的方式。
+
+    function(){
+        with(document){
+            with(this){
+
+            }
+        }
+    }
+    <input type="button" value="click me", onclick="alert(value)"/>
+
+4. 缺点：有两个。
+ + 存在时差问题。
+
+    通过try-catch块解决。
+    <input type="button" value="click me", onclick="try{showMsg();}catch(ex){}"/>
+
+ + 这样扩展事件处理程序的作用域链在不同浏览器中会导致不同结果
+ + 通过HTML指定事件处理程序的最后一个缺点是HTML与JavaScript代码紧密耦合。
+
+#### DOM0级事件处理程序
+
+通过JavaScript指定时间处理程序的传统方式，将一个函数赋值给一个事件处理程序属性。
+
+    var btn = document.getElementById("myBtn");
+    btn.onclick = function(){
+        alter("Clicked");
+    }
+
+使用DOM0级方法指定的事件处理程序被认为是元素的方法。因此，这时候的事件处理程序是在元素的作用域中运行，程序中的this引用当前元素。
+
+    var btn = document.getElementById("myBtn");
+    btn.onclick = function(){
+        alter(this.id);
+    }
+
+也可以删除DOM0级方法指定的事件处理程序：
+    btn.onclick = null;
+
+#### DOM2级事件处理程序
+
+提供两个方法：用于指定和删除事件处理程序的操作，addEventListener()和removeEventListener()。所有DOM节点都包含这两个方法，并且它们都接受3个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。最后的这个布尔值如果为true，表示在捕获阶段调用事件处理程序；如果是false，表示在冒泡阶段调用事件处理程序。
+
+通过addEventListener()添加的事件处理程序只能使用removeEventListener()来移除；
+
+大多数情况下，布尔值应设置为false，最大限度的兼容各种浏览器。
+
+    IE9, Firefox, Safari, Chrome和Opera支持DOM2级事件处理程序。
+
+
+#### IE事件处理程序
+
+IE实现了DOM中类似的两个方法，attachEvent()和detachEvent()。这两个方法接受相同的两个参数：事件处理程序名称与事件处理程序函数。由于IE8及更早的版本只支持事件冒泡，所以通过attachEvent()添加的事件处理程序都会被添加到冒泡阶段。
+
+    var btn = document.getElementById("myBtn");
+    btn.attachEvent("onclick", function(){
+        alter(this.id);
+    });
+
+在IE中使用attachEvent()与使用DOM0级方法的主要区别在于事件处理程序的作用域。
+
+    在使用attachEvent()方法的情况下，事件处理程序会在全局作用域中进行，因此this和window相同。
+
+    addEventListener()与attachEvent()类似，可以用来为一个元素添加多个事件处理程序。但是attachEvent()以添加它们的相反的顺序执行。
+
+
+#### 跨浏览器的事件处理程序
+
+要确保处理事件的代码能在大多数浏览器下一致的运行，只需要关注冒泡阶段。
+
+    var EventUtil= {
+        addHandler: function(element, type, handler){
+            if(element.addEventListener){
+                element.addEventLister(type, handler, false);
+            }else if(element.attachEvent){
+                element.attachEvent("on" + type, handler);
+            }else{
+                element["on"+type] = handler;
+            }
+        },
+        removeHandler: function(element, type, handler){
+            if(element.removeEventListener){
+                element.removeEventListener(type, handler, false);
+            }else if(element.detachEvent){
+                element.detachEvent("on" + type, handler);
+            }else{
+                element["on" + type] = null;
+            }
+        }
+    }
+
+注意： DOM0级对每个事件只支持一个事件处理程序。
+
+
+### 事件对象
+
+#### DOM中的事件对象
+
+|属性方法|类型|读/写|说明|
+|:------:|:--:|:---:|:--:|
+|bubbles|Boolean|只读|表明事件是否冒泡|
+
+...带添加
+
+在事件处理程序内部，对象this始终等于currentTarget的值，而target则只包含事件的实际目标。
+
+如果需要通过一个函数处理多个事件时，可以通过type属性。
+
+    var btn = document.getElementById("myBtn");
+    var handler = function(event){
+        switch(event.type){
+            case "click":
+                break;
+            case "mouseover":
+                break;
+            case "mouseout":
+                break;
+        }
+    };
+    btn.onclick = handler;
+    btn.onmouseover = handler;
+    btn.onmouseout = handler;
+
+要阻止特定事件的默认行为，可以重用preventDefault()方法。例如，链接的默认行为就是在被单击时会导航到其href特定指定的URL。
+
+只有cancelable是行为true是，才可以使用preventDefault()来取消其默认行为。
+
+另外，stopPropagation()方法用于立即停止事件在DOM层次中的传播。
+
+
+#### IE中的事件对象
+
+待添加
+
+
+#### 跨浏览器的事件对象
+
+带添加
+
+
+### 事件类型
+
+
+
+### 内存和性能
+
+
+### 模拟事件
+
+
+### 小结
+
+
 ### 带着问题学习
 
-1. 利用鼠标的滚动事件实现整页滚动效果。
+1. 利用鼠标的滚动事件实现整页滚动效果。 
+2. [10个优秀视差滚动插件][link2]
+
+[link2]: http://www.w3cplus.com/source/10-best-Parallax-Scrolling-plugin.html
 
 
+
+
+
+## 表单脚本
+
+
+## 使用Canvas绘图
+
+
+## HTML5脚本编程
+
+
+## 错误处理与调试
+
+
+## JavaScript与DML
 
 
 
