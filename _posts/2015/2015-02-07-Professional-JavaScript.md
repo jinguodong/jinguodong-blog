@@ -43,7 +43,7 @@ DOM3级：
 
 BOM的一些扩展功能：
 
-1. 探出新浏览器窗口的功能；
+1. 弹出新浏览器窗口的功能；
 2. 移动、缩放和关闭浏览器窗口的功能；
 3. 提供浏览器详细信息的navigator对象；
 4. 提供浏览器所加载页面下的详细信息的location对象；
@@ -224,12 +224,14 @@ JavaScript有以下三个不同的部分组成：
     <input type="button" value="Click Me" on click="alert('Clicked')" />
     由于onclick特性将JavaScript代码作为其值来定义的。因此不能在其中使用未经转义的HTML语法字符，如：&, "", <, >。
 
-1. 这样指定事件处理程序具有一些独到之处。首先，会创建一个封装着元素属性值的函数。这个函数中有一个局部变量event，也就是事件对象。
+这样指定事件处理程序具有一些独到之处。首先，会创建一个封装着元素属性值的函数。这个函数中有一个局部变量event，也就是事件对象。
 
     <input type="button" value="click me", onclick="alert(event.type)"/>
 
-2. 在这个函数内部，this值等于事件的目标元素。
-3. 关于这个动态创建的函数，另一个有意思的地方是它扩展作用域的方式。
+在这个函数内部，this值等于事件的目标元素。
+
+关于这个动态创建的函数，另一个有意思的地方是它扩展作用域的方式。
+
 
     function(){
         with(document){
@@ -240,14 +242,14 @@ JavaScript有以下三个不同的部分组成：
     }
     <input type="button" value="click me", onclick="alert(value)"/>
 
-4. 缺点：有两个。
- + 存在时差问题。
+缺点：有两个。
++ 存在时差问题。
 
     通过try-catch块解决。
     <input type="button" value="click me", onclick="try{showMsg();}catch(ex){}"/>
 
- + 这样扩展事件处理程序的作用域链在不同浏览器中会导致不同结果
- + 通过HTML指定事件处理程序的最后一个缺点是HTML与JavaScript代码紧密耦合。
++ 这样扩展事件处理程序的作用域链在不同浏览器中会导致不同结果
++ 通过HTML指定事件处理程序的最后一个缺点是HTML与JavaScript代码紧密耦合。
 
 #### DOM0级事件处理程序
 
@@ -325,13 +327,19 @@ IE实现了DOM中类似的两个方法，attachEvent()和detachEvent()。这两�
 
 ### 事件对象
 
+> 在触发DOM上的某个事件时，会产生一个事件对象event，这个对象包含着所有与事件有关的信息。
+> 包括事件的元素、事件的类型以及其他与特定事件相关的信息。
+
 #### DOM中的事件对象
 
 |属性方法|类型|读/写|说明|
 |:------:|:--:|:---:|:--:|
 |bubbles|Boolean|只读|表明事件是否冒泡|
-
-...带添加
+|currentTarget|Element|只读|其事件处理程序当前正在处理事件的那个元素|
+|preventDefault()|Function|只读|取消事件的默认行为。如果cancelable是true，则可以使用这个方法|
+|stopPropagation()|Function|只读|取消事件的进一步捕获或冒泡，同时阻止任何事件处理程序被调用（DOM3级事件中新增）|
+|target|Element|只读|事件的目标|
+...待添加
 
 在事件处理程序内部，对象this始终等于currentTarget的值，而target则只包含事件的实际目标。
 
@@ -352,11 +360,11 @@ IE实现了DOM中类似的两个方法，attachEvent()和detachEvent()。这两�
     btn.onmouseover = handler;
     btn.onmouseout = handler;
 
-要阻止特定事件的默认行为，可以重用preventDefault()方法。例如，链接的默认行为就是在被单击时会导航到其href特定指定的URL。
+> 要阻止特定事件的默认行为，可以重用preventDefault()方法。例如，链接的默认行为就是在被单击时会导航到其href特定指定的URL。
 
-只有cancelable是行为true是，才可以使用preventDefault()来取消其默认行为。
+> 只有cancelable是行为true是，才可以使用preventDefault()来取消其默认行为。
 
-另外，stopPropagation()方法用于立即停止事件在DOM层次中的传播。
+> 另外，stopPropagation()方法用于立即停止事件在DOM层次中的传播。
 
 
 #### IE中的事件对象
@@ -366,10 +374,54 @@ IE实现了DOM中类似的两个方法，attachEvent()和detachEvent()。这两�
 
 #### 跨浏览器的事件对象
 
-带添加
+    var EventUtil = {
+        addHandler: function(element, type, handler){
+            ...
+        },
+        getEvent: function(event){
+            return event? event: window.event;
+        },
+        getTarget: function(event){
+            return event.target || event.srcElement;
+        },
+        preventDefault: function(event){
+            if(event.preventDefault){
+                event.preventDefault();
+            }else{
+                event.returnValue = false;
+            }
+        },
+
+        removeHandler: function(element, type, handler){
+            ...
+        },
+
+        stopPropagation: function(event){
+            if(event.stopPropagation){
+                event.stopPropagation();
+            }else{
+                event.cancelBubble = true;
+            }
+        }
+    };
 
 
 ### 事件类型
+
+类型归纳：
+
+1. UE事件，当用户与页面上的元素交互式触发；
+2. 焦点事件，当元素获得或失去焦点时触发；
+3. 鼠标事件，当用户通过鼠标在页面上执行操作时触发；
+4. 滚轮事件，当使用鼠标滚轮时触发；
+5. 文本事件，当在文档中输入文本时触发；
+6. 键盘事件，当用户通过键盘在页面上执行操作时触发；
+7. 合成事件，
+8. 变动事件，当底层DOM结构发生变化时触发。
+
+
+#### UI事件
+
 
 
 
@@ -384,7 +436,8 @@ IE实现了DOM中类似的两个方法，attachEvent()和detachEvent()。这两�
 
 ### 带着问题学习
 
-1. 利用鼠标的滚动事件实现整页滚动效果。 
+1. 利用鼠标的滚动事件实现整页滚动效果。
+2. iscroll插件，内部元素拖拽影响到外部元素的拖拽，禁止拖拽事件外传？
 2. [10个优秀视差滚动插件][link2]
 
 [link2]: http://www.w3cplus.com/source/10-best-Parallax-Scrolling-plugin.html

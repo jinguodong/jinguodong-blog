@@ -10,7 +10,7 @@ tags:
 
 转载自：[提高前段开发效率的那些事][1]
 
-[1]： http://www.kuqin.com/shuoit/20150205/344733.html
+[1]: http://www.kuqin.com/shuoit/20150205/344733.html
 
 ## 选一个好用的编辑器，并熟练使用她（他）
 
