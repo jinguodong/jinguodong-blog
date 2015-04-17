@@ -6,6 +6,7 @@ categories:
 - 编程语言
 tags:
 - JavaScript
+- 读书笔记
 ---
 
 ## 需要解决的问题

@@ -7,8 +7,750 @@
     <title>guodong.j</title>
     <link href="/jinguodong-blog/feed/" rel="self" />
     <link href="http://geeklu.com" />
-    <lastBuildDate>2015-03-20T18:06:28+08:00</lastBuildDate>
+    <lastBuildDate>2015-04-17T18:15:39+08:00</lastBuildDate>
     <webMaster>buptjinguodong@gmail.com</webMaster>
+    
+    <item>
+      <title>Python核心编程（第二版）</title>
+      <link href="/jinguodong-blog/2015/04/core-python-programming/"/>
+      <pubDate>2015-04-17T00:00:00+08:00</pubDate>
+      <author>guodong.j</author>
+      <guid>/jinguodong-blog/2015/04/core-python-programming</guid>
+      <content:encoded><![CDATA[<h2>对象</h2>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>自己动手写网络爬虫</title>
+      <link href="/jinguodong-blog/2015/04/self-spider/"/>
+      <pubDate>2015-04-15T00:00:00+08:00</pubDate>
+      <author>guodong.j</author>
+      <guid>/jinguodong-blog/2015/04/self-spider</guid>
+      <content:encoded><![CDATA[<h2>需要解决的问题</h2>
+
+<h2>获取海量数据</h2>
+
+<p>WebNews Crawler是通过HTTP下载资源的Java爬虫。</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Heritrix网络爬虫</title>
+      <link href="/jinguodong-blog/2015/04/heritrix-spider/"/>
+      <pubDate>2015-04-15T00:00:00+08:00</pubDate>
+      <author>guodong.j</author>
+      <guid>/jinguodong-blog/2015/04/heritrix-spider</guid>
+      <content:encoded><![CDATA[<h2>前期调研</h2>
+
+<p><a href="http://www.ibm.com/developerworks/cn/opensource/os-cn-heritrix/">利用 Heritrix 构建特定站点爬虫</a></p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Web Spider With Python</title>
+      <link href="/jinguodong-blog/2015/04/web-spider-with-python/"/>
+      <pubDate>2015-04-14T00:00:00+08:00</pubDate>
+      <author>guodong.j</author>
+      <guid>/jinguodong-blog/2015/04/web-spider-with-python</guid>
+      <content:encoded><![CDATA[<h2>前期调研</h2>
+
+<p><a href="http://www.nowamagic.net/academy/detail/1302879"></a>
+<a href="http://blog.csdn.net/sssogs/article/details/8574595">Python 之 BNUOJ代码抓取器</a>
+<a href="http://www.isaced.com/post-197.html"></a>
+<a href="http://bbs.chinaunix.net/thread-3779115-1-1.html"></a></p>
+
+<h2>异常处理和HTTP状态码分类</h2>
+
+<ol>
+<li>URLError</li>
+<li>HTTPError</li>
+</ol>
+
+
+<p><strong>HTTP状态码</strong></p>
+
+<pre><code>200：请求成功      处理方式：获得响应的内容，进行处理 
+201：请求完成，结果是创建了新资源。新创建资源的URI可在响应的实体中得到    处理方式：爬虫中不会遇到 
+202：请求被接受，但处理尚未完成    处理方式：阻塞等待 
+204：服务器端已经实现了请求，但是没有返回新的信 息。如果客户是用户代理，则无须为此更新自身的文档视图。    处理方式：丢弃
+300：该状态码不被HTTP/1.0的应用程序直接使用， 只是作为3XX类型回应的默认解释。存在多个可用的被请求资源。    处理方式：若程序中能够处理，则进行进一步处理，如果程序中不能处理，则丢弃
+301：请求到的资源都会分配一个永久的URL，这样就可以在将来通过该URL来访问此资源    处理方式：重定向到分配的URL
+302：请求到的资源在一个不同的URL处临时保存     处理方式：重定向到临时的URL
+304 请求的资源未更新     处理方式：丢弃 
+400 非法请求     处理方式：丢弃 
+401 未授权     处理方式：丢弃 
+403 禁止     处理方式：丢弃 
+404 没有找到     处理方式：丢弃 
+5XX 回应代码以“5”开头的状态码表示服务器端发现自己出现错误，不能继续执行请求    处理方式：丢弃
+</code></pre>
+
+<p><strong>异常处理经典案例</strong></p>
+
+<pre><code>from urllib2 import Request, urlopen, URLError, HTTPError
+
+req = Request('http://bbs.csdn.net/callmewhy')
+try:
+    response = urlopen(req)
+except HTTPError, e:
+    print 'The server couldn\'t fulfill the request.'
+    print 'Error code: ', e.code
+except URLError, e:
+    print 'We failed to reach a server.'
+    print 'Reason: ', e.reason
+else:
+    print 'No exception was raised.'
+    # everything is fine
+</code></pre>
+
+<h2>Opener与Handler</h2>
+
+<p>...</p>
+
+<h2>urllib2的使用细节与抓站技巧</h2>
+
+<p>使用说明：</p>
+
+<p><strong>1 proxy的设置</strong></p>
+
+<p>urllib2 默认会使用环境变量 <strong>http_proxy</strong> 来设置 HTTP Proxy。如果想在程序中明确控制 Proxy，而不受环境变量的影响，可以使用下面的方式</p>
+
+<pre><code>import urllib2
+
+enable_proxy = True
+proxy_handler = urllib2.ProxyHandler({"http" : 'http://some-proxy.com:8080'})
+null_proxy_handler = urllib2.ProxyHandler({})
+
+if enable_proxy:
+    opener = urllib2.build_opener(proxy_handler)
+else:
+    opener = urllib2.build_opener(null_proxy_handler)
+
+urllib2.install_opener(opener)
+</code></pre>
+
+<p>这里要注意的一个细节，使用 <strong>urllib2.install_opener()</strong> 会设置 urllib2 的全局 opener。这样后面的使用会很方便，但不能做更细粒度的控制，比如想在程序中使用两个不同的 Proxy 设置等。比较好的做法是不使用 install_opener 去更改全局的设置，而只是直接调用 opener 的 open 方法代替全局的 urlopen 方法。</p>
+
+<p><strong>2 Timeout 设置</strong></p>
+
+<p>在老版本中，urllib2 的 API 并没有暴露 Timeout 的设置，要设置 Timeout 值，只能更改 Socket 的全局 Timeout 值。</p>
+
+<p>import urllib2
+import socket</p>
+
+<p>socket.setdefaulttimeout(10) # 10 秒钟后超时
+urllib2.socket.setdefaulttimeout(10) # 另一种方式
+在新的 Python 2.6 版本中，超时可以通过 urllib2.urlopen() 的 timeout 参数直接设置。</p>
+
+<p>import urllib2
+response = urllib2.urlopen('http://www.google.com', timeout=10)</p>
+
+<p><strong>3 在 HTTP Request 中加入特定的 Header</strong></p>
+
+<p>要加入 Header，需要使用 Request 对象：</p>
+
+<p>import urllib2</p>
+
+<p>request = urllib2.Request(uri)
+request.add_header('User-Agent', 'fake-client')
+response = urllib2.urlopen(request)
+对有些 header 要特别留意，Server 端会针对这些 header 做检查</p>
+
+<p>User-Agent 有些 Server 或 Proxy 会检查该值，用来判断是否是浏览器发起的 Request
+Content-Type 在使用 REST 接口时，Server 会检查该值，用来确定 HTTP Body 中的内容该怎样解析。</p>
+
+<p>常见的取值有：</p>
+
+<p>application/xml ：在 XML RPC，如 RESTful/SOAP 调用时使用
+application/json ：在 JSON RPC 调用时使用
+application/x-www-form-urlencoded ：浏览器提交 Web 表单时使用</p>
+
+<p>……</p>
+
+<p>在使用 RPC 调用 Server 提供的 RESTful 或 SOAP 服务时， Content-Type 设置错误会导致 Server 拒绝服务。</p>
+
+<p><strong>4 Redirect</strong></p>
+
+<p>urllib2 默认情况下会针对 3xx HTTP 返回码自动进行 Redirect 动作，无需人工配置。要检测是否发生了 Redirect 动作，只要检查一下 Response 的 URL 和 Request 的 URL 是否一致就可以了。</p>
+
+<p>import urllib2
+response = urllib2.urlopen('http://www.google.cn')
+redirected = response.geturl() == 'http://www.google.cn'
+如果不想自动 Redirect，除了使用更低层次的 httplib 库之外，还可以使用自定义的 HTTPRedirectHandler 类。</p>
+
+<p>import urllib2</p>
+
+<p>class RedirectHandler(urllib2.HTTPRedirectHandler):
+    def http_error_301(self, req, fp, code, msg, headers):
+        pass
+    def http_error_302(self, req, fp, code, msg, headers):
+        pass</p>
+
+<p>opener = urllib2.build_opener(RedirectHandler)
+opener.open('http://www.google.cn')</p>
+
+<p><strong>5 Cookie</strong></p>
+
+<p>urllib2 对 Cookie 的处理也是自动的。如果需要得到某个 Cookie 项的值，可以这么做：</p>
+
+<p>import urllib2
+import cookielib</p>
+
+<p>cookie = cookielib.CookieJar()
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))
+response = opener.open('http://www.google.com')
+for item in cookie:
+    if item.name == 'some_cookie_item_name':
+        print item.value</p>
+
+<p><strong>6 使用 HTTP 的 PUT 和 DELETE 方法</strong>
+urllib2 只支持 HTTP 的 GET 和 POST 方法，如果要使用 HTTP PUT 和 DELETE，只能使用比较低层的 httplib 库。虽然如此，我们还是能通过下面的方式，使 urllib2 能够发出 HTTP PUT 或 DELETE 的包：</p>
+
+<p>import urllib2</p>
+
+<p>request = urllib2.Request(uri, data=data)
+request.get_method = lambda: 'PUT' # or 'DELETE'
+response = urllib2.urlopen(request)
+这种做法虽然属于 Hack 的方式，但实际使用起来也没什么问题。</p>
+
+<p><strong>7 得到 HTTP 的返回码</strong></p>
+
+<p>对于 200 OK 来说，只要使用 urlopen 返回的 response 对象的 getcode() 方法就可以得到 HTTP 的返回码。但对其它返回码来说，urlopen 会抛出异常。这时候，就要检查异常对象的 code 属性了：</p>
+
+<p>import urllib2
+try:
+    response = urllib2.urlopen('http://restrict.web.com')
+except urllib2.HTTPError, e:
+    print e.code</p>
+
+<p><strong>8 Debug Log</strong></p>
+
+<p>使用 urllib2 时，可以通过下面的方法把 Debug Log 打开，这样收发包的内容就会在屏幕上打印出来，方便我们调试，在一定程度上可以省去抓包的工作。</p>
+
+<p>import urllib2</p>
+
+<p>httpHandler = urllib2.HTTPHandler(debuglevel=1)
+httpsHandler = urllib2.HTTPSHandler(debuglevel=1)
+opener = urllib2.build_opener(httpHandler, httpsHandler)</p>
+
+<p>urllib2.install_opener(opener)
+response = urllib2.urlopen('http://www.google.com')</p>
+
+<p><strong>9.表单的处理</strong></p>
+
+<p>登录必要填表，表单怎么填？
+首先利用工具截取所要填表的内容。
+比如我一般用firefox+httpfox插件来看看自己到底发送了些什么包。
+以verycd为例，先找到自己发的POST请求，以及POST表单项。
+可以看到verycd的话需要填username,password,continueURI,fk,login_submit这几项，其中fk是随机生成的（其实不太随机，看上去像是把epoch时间经过简单的编码生成的），需要从网页获取，也就是说得先访问一次网页，用正则表达式等工具截取返回数据中的fk项。continueURI顾名思义可以随便写，login_submit是固定的，这从源码可以看出。还有username，password那就很显然了：
+[python] view plaincopy</p>
+
+<h1>-<em>- coding: utf-8 -</em>-</h1>
+
+<p>import urllib<br/>
+import urllib2<br/>
+postdata=urllib.urlencode({<br/>
+    'username':'汪小光',<br/>
+    'password':'why888',<br/>
+    'continueURI':'http://www.verycd.com/',<br/>
+    'fk':'',<br/>
+    'login_submit':'登录'<br/>
+})<br/>
+req = urllib2.Request(<br/>
+    url = 'http://secure.verycd.com/signin',<br/>
+    data = postdata<br/>
+)<br/>
+result = urllib2.urlopen(req)<br/>
+print result.read()</p>
+
+<p><strong>10.伪装成浏览器访问</strong></p>
+
+<p>某些网站反感爬虫的到访，于是对爬虫一律拒绝请求
+这时候我们需要伪装成浏览器，这可以通过修改http包中的header来实现
+[python] view plaincopy</p>
+
+<h1>…</h1>
+
+<p>headers = {<br/>
+    'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'<br/>
+}<br/>
+req = urllib2.Request(<br/>
+    url = 'http://secure.verycd.com/signin/*/http://www.verycd.com/',<br/>
+    data = postdata,<br/>
+    headers = headers<br/>
+)</p>
+
+<h1>...</h1>
+
+<p><strong>11.对付"反盗链"</strong></p>
+
+<p>某些站点有所谓的反盗链设置，其实说穿了很简单，
+就是检查你发送请求的header里面，referer站点是不是他自己，
+所以我们只需要像把headers的referer改成该网站即可，以cnbeta为例：</p>
+
+<h1>...</h1>
+
+<p>headers = {
+    'Referer':'http://www.cnbeta.com/articles'
+}</p>
+
+<h1>...</h1>
+
+<p>headers是一个dict数据结构，你可以放入任何想要的header，来做一些伪装。
+例如，有些网站喜欢读取header中的X-Forwarded-For来看看人家的真实IP，可以直接把X-Forwarde-For改了。</p>
+
+<h2>一个简单的百度贴吧的小爬虫</h2>
+
+<p>...</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Python基础教程</title>
+      <link href="/jinguodong-blog/2015/04/Basic-Python/"/>
+      <pubDate>2015-04-14T00:00:00+08:00</pubDate>
+      <author>guodong.j</author>
+      <guid>/jinguodong-blog/2015/04/Basic-Python</guid>
+      <content:encoded><![CDATA[<h2>循环（条件、循环和其他辅助语句）</h2>
+
+<p><strong>数据结构</strong>：序列(列表、元组)和字典</p>
+
+<p><strong>循环方法</strong>：while、for</p>
+
+<h3>序列:循环分片操作</h3>
+
+<pre><code>numbers[begin, end, step]
+numbers[0:10:1]
+</code></pre>
+
+<p>基本列表操作：</p>
+
+<pre><code>list('Hello')
+del numbers[2]
+numbers.append(9) #add element 9 to the end of numbers
+numbers.extend(9) # 通过分片赋值实现
+numbers.index(5) #找到列表中第一个匹配项，若未找到抛出异常
+numbers.insert(3, 'who') #在numbers[3]的位置上添加'who'元素
+numbers.pop(空或number) #默认是最后一个元素，否则是指定位置元素
+numbers.remove(4) # 删除第一个匹配项，不存在抛出异常    
+numbers.reverse()
+numbers.sort(空|自定义比较函数cmp|key=somefunc|reverse=TrueorFalse)
+    x = [4,2,1,3]
+    y = x[:] # 将x的所有元素的分片赋给y
+    y.sort()
+numbers.sorted()
+</code></pre>
+
+<p>元组：</p>
+
+<pre><code>tuple([1,2,3])
+</code></pre>
+
+<h3>字典</h3>
+
+<pre><code>dict([('name','miky'), ('age',42)])
+d = dict(name='Mike', age=42)
+</code></pre>
+
+<p>字典基本操作：</p>
+
+<pre><code>len(d)
+del d[k] # 删除d中键为k的项
+k in d # 判断d中是否含键为k的项
+</code></pre>
+
+<p>字典的格式化字符串</p>
+
+<pre><code>phonebook = {"Cecil" : '9120'}
+"Cecil's phone is %(Cecil)s" % phonebook
+</code></pre>
+
+<p>字典方法</p>
+
+<pre><code>clear()
+copy() # 浅复制
+deepcopy() # 深复制函数
+    from copy import deepcopy()
+    dc = deepcopy(d)
+fromkeys()
+    dict.fromkeys(['name', 'age'], 空or自定义默认值)
+get(key, 空or自定义默认值)
+has_key()
+items(), iteritems()
+keys(), iterkeys()
+values(), itervalues()
+pop(key) # 返回可以指定的值，并移除key
+popitem()
+</code></pre>
+
+<h3>条件执行语句</h3>
+
+<pre><code>if num&gt;0:
+    statement
+elif num&lt;0:
+    statement
+else:
+    statement
+</code></pre>
+
+<h3>断言</h3>
+
+<pre><code>assert 0&lt;age&lt;10 #断言必须为真
+</code></pre>
+
+<h3>while循环 and for循环</h3>
+
+<pre><code>words = ['this', 'is', 'an', 'ex']
+for word in words:
+    statement
+</code></pre>
+
+<p>遍历字典</p>
+
+<pre><code>d = {'x':1, 'y':2, 'z':3}
+for key in d:
+    print key, 'correspondsto', d[key]
+for key, value in d.items():
+    statement
+</code></pre>
+
+<p>列表推算式</p>
+
+<pre><code>[x*x for x in range(10) if x % 3 == 0]
+</code></pre>
+
+<p>三人行</p>
+
+<pre><code>pass
+del
+exec and eval
+
+scope={}
+scope['x'] = 2
+scope['y'] = 3
+eval("x+y", scope)
+
+scope={}
+exec "x=1" in scope # 在scope域内执行x=1
+eval("x*x", scope) # 在scope域内运算x*x
+</code></pre>
+
+<h2>异常</h2>
+
+<pre><code>raise Exception
+class SomeCustomException(Exception): pass
+</code></pre>
+
+<p><strong>捕捉异常</strong></p>
+
+<pre><code>try:
+    x/y
+except ZeroDivisionError:
+    print ...
+except TypeError, e: # 得到异常对象e
+    print ...
+except Exception, e: # 全捕捉
+    print ...
+
+try:
+    x/y
+except (ZeroDivisionError, TypeError[, Others]):
+    print ...
+else: # 没有异常发生时被执行
+    print ...
+finally: # 绝对会被执行
+    print ...
+</code></pre>
+
+<p><strong>异常的经典应用</strong></p>
+
+<pre><code>def describePerson(person):
+    print "Description of", person['name']
+    print 'Age', person['age']
+    try:
+        print 'Occupation', person['occupation']
+    except KeyError: pass
+
+try:
+    obj.write
+except AttributeError:
+    print ...
+else:
+    print ...
+</code></pre>
+
+<h2>抽象</h2>
+
+<pre><code>class Filter:
+    def init(self):
+        self.blocked = []
+    def filter(self, sequence):
+        return [x for x in sequence if x not in self.blocked]
+class SPAMFilter(Filter):
+    def init(self):
+        self.blocked = ['SPAM']
+
+issubclass(SPAMFilter, Filter)
+</code></pre>
+
+<h2>文件和素材</h2>
+
+<pre><code>open(name[, mode[, buffering]])
+mode: r, w, a, b, +
+buffering: 0, +num, -num
+buffering控制着文件的缓冲，+num表示使用num字节大小的内存区作为缓冲，只有当使用flush和close时才会写入硬盘。
+</code></pre>
+
+<h2>Python和万维网</h2>
+
+<p>1 屏幕抓取</p>
+
+<pre><code>Tidy+HTMLParser
+from subprocess import Popen, PIPE
+text = open('messy.html').read()
+tidy = Popen('tidy', stdin=PIPE, stdout=PIPE, stderr=PIPE)
+tidy.stdin.write(text)
+tidy.stdin.close()
+print tidy.stdout.read() # 得到标准的XHTML格式的文档
+
+HTMLParser:
+handle_starttag(tag, attrs) # 找到开始标签时调用。attrs是（名称，值）对的序列
+handle_data(data) # 使用文本数据时调用
+handle_endtag(tag) # 找到标签结束时调用
+一个经典的案例
+from urllib import urlopen
+from HTMLParser import HTMLParser
+
+class Scraper(HTMLParser):
+    in_h3 = False
+    in_link = False
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag = 'h3':
+            self.in_h3 = True
+        if tag = 'a' and 'href' in attrs:
+            self.in_link = True
+            self.chunks = []
+            self.url = attrs['href']
+    def handle_data(self, data):
+        if self.in_link:
+            self.chunks.append(data)
+    def handle_endtag(self, tag):
+        if tag = 'h3':
+            self.in_h3 = False
+        if tag = 'a':
+            if self.in_h3 and self.in_link:
+                print '%s (%s)' % (''.join(self.chunks), self.url)
+            self.in_link = False
+text = urlopen('http://python.org/community/jobs').read()
+parser = Scraper()
+parser = feed(text)
+parser = close()
+
+
+"Beautiful Soup" FOR HTML
+"Scrape 'N' Feed" FOR RSS feed
+</code></pre>
+
+<p><strong>Beautiful Soup:</strong></p>
+
+<pre><code>Docs: http://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html
+四种对象:
+    1. Tag
+    2. NavigableString
+    3. BeautifulSoup
+    4. Comment
+
+Tag:
+tag.name
+tag.attrs
+最常见的多值的属性是 class (一个tag可以有多个CSS的class). 还有一些属性 rel , rev , accept-charset , headers , accesskey . 在Beautiful Soup中多值属性的返回类型是list
+
+tag.string
+字符串常被包含在tag内
+</code></pre>
+
+<p>遍历文档树</p>
+
+<pre><code>获取&lt;body&gt;标签中的第一个&lt;b&gt;标签:
+soup.body.b
+得到所有的&lt;a&gt;标签：
+soup.find_all('a')
+</code></pre>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>CI框架学习笔记</title>
+      <link href="/jinguodong-blog/2015/04/plan-list/"/>
+      <pubDate>2015-04-09T00:00:00+08:00</pubDate>
+      <author>guodong.j</author>
+      <guid>/jinguodong-blog/2015/04/plan-list</guid>
+      <content:encoded><![CDATA[<h2>长目标（2015-4-9）</h2>
+
+<ol>
+<li>研究phalcon框架，做到能够完整的二次开发</li>
+<li>研究爬虫技术</li>
+<li>深究前段开发技术（bootstrap）</li>
+<li>学习Java，使用J2EE技术开发一个网站</li>
+<li>报考导游证</li>
+<li>学习微信公众平台开发模式</li>
+</ol>
+
+
+<blockquote><p>要求做到如下要求：微信平台开发
+要求：
+熟悉微信公共平台开发模式，
+对开发接口有了解，
+可独立完成小的能组件，如自定义菜单，用户消息导出，分析等。</p></blockquote>
+
+<ol>
+<li>学习摄影技术（包括摄影前期，中期和后期处理）</li>
+</ol>
+
+
+<blockquote><p>http://www.zhihu.com/question/27004700/answer/34955464?utm_campaign=weekly168&amp;utm_source=weekly-digest&amp;utm_medium=email</p></blockquote>
+
+<h2>爬虫技术研究计划表</h2>
+
+<h3>前期调研</h3>
+
+<p><a href="http://blog.csdn.net/column/details/why-bug.html">Python爬虫入门教程-请叫我汪海</a></p>
+
+<p><a href="http://www.zhihu.com/question/20899988">如何入门 Python 爬虫-知乎</a></p>
+
+<p><a href="http://www.zhihu.com/question/27621722">能利用爬虫技术做到哪些很酷很有趣很有用的事情？-知乎</a></p>
+
+<p><a href="http://plough-man.com/?p=379">我的第一只爬虫：爬取豆瓣读书-tz二木</a></p>
+
+<pre><code>之前同学有用过带界面的程序，貌似是专门爬某门户网站新闻用的。但是没用多久就跟我说想爬淘宝的商品信息，怎么办，我告诉他自己写一个，然后就没有然后了。爬虫这种东西针对性很强，每个网站的就够，数据获取方式，数据结构千变万化，所以自己写个没什么坏处（如果你是个程序员或者经常从事相关的数据搜集工作）。
+
+可以从java入手，很容易找到中文教程。
+httpClient+jsoup
+先试着爬一个不用登陆，安全级别低的网站，例如成人网站（现在电脑里还有某成人网站所有电影的磁力连接。。）
+然后爬一陆个需要登的网站，你会就会去研究模拟登陆，http协议，cookie这些东西
+然后再爬一个难度较高的网站，新浪微博啦，豆瓣啦，你就会研究识别验证码，反爬虫机制之类的东西
+如果你想把爬下来的东西做成像百度，谷歌一样的搜索引擎，可以研究lucene，solr这些东西
+如果你想提高你的爬虫效率，你就会研究多线程，分布式这些东西，搞个mongoDB玩玩也是不错的
+
+这些都是我今年年初做毕业论文的时候学到的，总之东西都不难，难的是真正动手去做，越做越有自信。
+</code></pre>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>CI框架学习笔记</title>
+      <link href="/jinguodong-blog/2015/04/CI-Study/"/>
+      <pubDate>2015-04-09T00:00:00+08:00</pubDate>
+      <author>guodong.j</author>
+      <guid>/jinguodong-blog/2015/04/CI-Study</guid>
+      <content:encoded><![CDATA[
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>iscroll-5学习笔记</title>
+      <link href="/jinguodong-blog/2015/03/front-note/"/>
+      <pubDate>2015-03-29T00:00:00+08:00</pubDate>
+      <author>guodong.j</author>
+      <guid>/jinguodong-blog/2015/03/front-note</guid>
+      <content:encoded><![CDATA[<h2>HTML内所有元素的默认display形态</h2>
+
+<pre><code>.dcss html,.dcss address,.dcss blockquote,.dcss body,.dcss dd,.dcss div,
+.dcss dl,.dcss dt,.dcss fieldset,.dcss form,.dcss frame,.dcss frameset,
+.dcss h1,.dcss h2,.dcss h3,.dcss h4,.dcss h5,.dcss h6,.dcss noframes,
+.dcss ol,.dcss p,.dcss ul,.dcss center,.dcss dir,.dcss hr,.dcss menu, 
+.dcss pre { display: block }
+.dcss li { display: list-item }
+.dcss head { display: none }
+.dcss table { display: table }
+.dcss tr { display: table-row }
+.dcss thead { display: table-header-group }
+.dcss tbody { display: table-row-group }
+.dcss tfoot { display: table-footer-group }
+.dcss col { display: table-column }
+.dcss colgroup { display: table-column-group }
+.dcss td,.dcss  th { display: table-cell; }
+.dcss caption { display: table-caption }
+.dcss th { font-weight: bolder; text-align: center }
+.dcss caption { text-align: center }
+.dcss body { margin: 8px; line-height: 1.12 }
+.dcss h1 { font-size: 2em; margin: .67em 0;line-height: 1.5em }
+.dcss h2 { font-size: 1.5em; margin: .75em 0;line-height: 1.5em }
+.dcss h3 { font-size: 1.17em; margin: .83em 0;line-height: 1.5em }
+.dcss h4 { font-size: 1.09em; margin: 1.12em 0;line-height: 1.5em }
+.dcss h4,.dcss p,.dcss blockquote,.dcss ul,.dcss fieldset, .dcss form,.dcss ol,.dcss dl,.dcss dir,.dcss menu { margin: 1.12em 0 }
+.dcss h5 { font-size: .83em; margin: 1.5em 0;line-height: 1.5em }
+.dcss h6 { font-size: .75em; margin: 1.67em 0;line-height: 1.5em }
+.dcss h1, .dcss h2, .dcss h3, .dcss h4, .dcss h5, .dcss h6, .dcss b,.dcss strong { font-weight: bolder }
+.dcss blockquote { margin-left: 40px; margin-right: 40px }
+.dcss i, .dcss cite, .dcss em,.dcss var,.dcss address { font-style: italic }
+.dcss pre, .dcss tt,.dcss  code,.dcss  kbd,.dcss samp { font-family: monospace }
+.dcss pre { white-space: pre }
+.dcss button,.dcss textarea,.dcss input,.dcss object,.dcss select { display:inline-block; }
+.dcss big { font-size: 1.17em }
+.dcss small, .dcss sub, .dcss sup { font-size: .83em }
+.dcss sub { vertical-align: sub }
+.dcss sup { vertical-align: super }
+.dcss table { border-spacing: 2px; }
+.dcss thead, .dcss tbody,.dcss tfoot { vertical-align: middle }
+.dcss td, .dcss th { vertical-align: inherit }
+.dcss s, .dcss strike,.dcss  del { text-decoration: line-through }
+.dcss hr { border: 1px inset }
+.dcss ol, .dcss ul,.dcss  dir, .dcss menu, .dcss dd { margin-left: 40px }
+.dcss ol { list-style-type: decimal }
+.dcss ol ul,.dcss ul ol, .dcss ul ul, .dcss ol ol { margin-top: 0; margin-bottom: 0 }
+.dcss u,.dcss ins { text-decoration: underline }
+.dcss br:before { content: "A" }
+.dcss :before, .dcss :after { white-space: pre-line }
+.dcss center { text-align: center }
+.dcss abbr,.dcss acronym { font-variant: small-caps; letter-spacing: 0.1em }
+.dcss :link,.dcss :visited { text-decoration: underline }
+.dcss :focus { outline: thin dotted invert }
+.dcss BDO[DIR="ltr"] { direction: ltr; unicode-bidi: bidi-override }
+.dcss BDO[DIR="rtl"] { direction: rtl; unicode-bidi: bidi-override }
+.dcss *[DIR="ltr"] { direction: ltr; unicode-bidi: embed }
+.dcss *[DIR="rtl"] { direction: rtl; unicode-bidi: embed }
+&lt;a href='https://github.com/media' class='user-mention'&gt;@media&lt;/a&gt; print {
+    .dcss h1 { page-break-before: always }
+    .dcss h1,.dcss h2,.dcss h3,.dcss h4,.dcss h5,.dcss h6 { page-break-after: avoid }
+    .dcss ul,.dcss ol,.dcss dl { page-break-before: avoid }
+}
+</code></pre>
+
+<h2>jQuery操作DOM函数一览</h2>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>自我鉴定</title>
+      <link href="/jinguodong-blog/2015/03/self-evaluation/"/>
+      <pubDate>2015-03-25T00:00:00+08:00</pubDate>
+      <author>guodong.j</author>
+      <guid>/jinguodong-blog/2015/03/self-evaluation</guid>
+      <content:encoded><![CDATA[<h2>研究生自我鉴定</h2>
+
+<p>本人作为研究生在北京邮电大学网络技术研究院攻读计算机科学与技术专业两年半，毕业之际，回顾研究生期间的学习、工作以及生活，做自我鉴定如下：</p>
+
+<p>本人在思想觉悟上始终对自己有较高的要求，能用科学发展观作为自己的指导思想，正确认识世界、认识社会，能清醒的意识到自己所负担的社会责任，对个人的人生理想和发展目标，有成熟的认识和定位。</p>
+
+<p>在专业课程的学习上，根据自身研究方向的要求，有针对性的认真研读了有关核心课程，为自己的科研工作打下了扎实的基础；并涉猎了一部分其他相关课程，开阔视野，对本研究方向的应用背景以及整个学科的结构有了宏观的认识。</p>
+
+<p>在科研工作上，根据导师的指导，研读了大量论著，逐渐明确了研究方向，通过自身不断的努力，以及与师长同学间的探讨交流，独自主持了一个组合创新型的科研项目，参与了一个企、事业单位委托科研项目，取得了比较满意的成果。在此期间，查阅资料，综合分析等基本素质不断提高，书面表达的能力也得到了锻炼，尤其是独立思考、判断和研究的能力，有了突出进步。</p>
+
+<p>在平时生活中，为人真诚热情，做事认真负责，与同学关系融洽。在工作方面，抱着认真负责的态度和为同学服务的心态，不仅为同学带来方便，也提高了自身组织管理能力和表达能力。在课余时间积极发展自身的业余爱好和兴趣，参加了不少学校活动和社会活动，为个人的全面发展打下了坚实的基础。</p>
+
+<p>毕业在即，在工作实践中，除了提升适应工作要求的具体业务能力，还提高了和同事沟通交流的能力，团队协作的素质也得以培养。在今后的社会生活中，会面临更大的挑战和机遇，我已经做好了准备，迎头而上。我会继续学习，不断进取，勇于开拓，直视困难，校正缺点，实现更高的社会价值。</p>
+
+<h2>班组(基层组织)鉴定：</h2>
+
+<p>该同学在硕士研究生学习阶段，思想上积极要求上进，在思想觉悟上始终严格要求自己，积极向上，不断自我提高。在专业课程的学习上，能根据自身研究方向的要求，有针对性的认真研读了课内外有关书籍，查阅了广泛的专业文献，掌握了本门学科坚实的基础理论知识和系统的专业知识，具有较强的科学研究能力和创新能力，具有很强的实践动手能力。在平时生活中，为人处世和善热情，和同学关系融洽，并积极参与各项集体活动，乐观开朗，乐于助人，意志坚强。希望在以后的工作和学习中，继续保持并发扬优良作风，兢兢业业，争取取得更大的成绩。</p>
+
+<h2>导师对毕业生业务能力、外语水平介绍及对其就业的建议：</h2>
+
+<p>该生在下一代网络和计算机软件方面具有扎实的理论基础和宽广的专业知识，并经常结合实践反思，将理论更好地与实践结合起来，同时具有很强的学习能力和科研能力。学习勤奋上进，善于思考探究，做事认真踏实，为人稳重守信，善于团队合作，具有很好的组织协调能力，并能独立进行一些科研工作。外语水平良好，能娴熟地阅读一些专业相关的外文文献。适合在研究机构从事科研工作或在企业从事软件开发工作。</p>
+]]></content:encoded>
+    </item>
     
     <item>
       <title>研究生毕业</title>
@@ -30,979 +772,6 @@
 <p>2、研究生学历电子注册之后方可发放毕业证、派遣证以及讨论学位授予问题。学生本人无需参与学历电子注册流程，只需按照学生所在学院（研究所、中心）的时间要求完成学位论文答辩，并将答辩材料递交至本学院（研究所、中心）即可。后续可关注研究生院网站公布的学历电子注册名单，公布名单后学生可向学生处咨询毕业证书问题。</p>
 
 <p>3、未能参加本次毕业的学生，可于2015年7月毕业。</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>工作选择</title>
-      <link href="/jinguodong-blog/2015/03/micro-or-bank/"/>
-      <pubDate>2015-03-08T00:00:00+08:00</pubDate>
-      <author>guodong.j</author>
-      <guid>/jinguodong-blog/2015/03/micro-or-bank</guid>
-      <content:encoded><![CDATA[<h2>微软</h2>
-
-<ol>
-<li>发展好</li>
-<li>户口（不是100%）</li>
-<li>薪水一般多</li>
-<li>条件好</li>
-<li>工作强度较大</li>
-<li>压力大</li>
-</ol>
-
-
-<h2>建行北开(Chosed)</h2>
-
-<ol>
-<li>户口（100%)</li>
-<li>发展差</li>
-<li>稳定</li>
-<li>压力小</li>
-</ol>
-
-
-<h2>1年之后的总结</h2>
-
-<p>待补充</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>研究生毕业论文答辩PPT主线</title>
-      <link href="/jinguodong-blog/2015/02/postgraduate-paper-ppt-metadata/"/>
-      <pubDate>2015-02-21T00:00:00+08:00</pubDate>
-      <author>guodong.j</author>
-      <guid>/jinguodong-blog/2015/02/postgraduate-paper-ppt-metadata</guid>
-      <content:encoded><![CDATA[<h2>基本理论</h2>
-
-<h3>希望听众能够。。。</h3>
-
-<ol>
-<li>了解什么？</li>
-<li>记住什么？</li>
-<li>做些什么？</li>
-</ol>
-
-
-<p>设定目标（SMART原则）
-Specific（明确性）
-Measurable（可衡量性）
-Attainable（可达成性）
-Relevant（相关性）
-Time-bound（时限性）
-分析听众
-找准核心听众
-预判听众立场
-了解听众痒点
-考虑部门立场
-考虑听众个性
-考虑演讲场合
-分析听众-主题
-好主题写在封面上
-点出演示主题
-抓住人的眼球
-制造兴奋点
-封面-标题
-用数字给标题添光彩
-想畅销书学标题
-向热门流行语要标题
-活动联想与双关联想
-封面-配图
-整体构思
-线索
-时间线
-空间线
-习惯结构
-经典框架
-目录
-3-5个单元
-让观众知道准备花多少时间讲每个内容
-带时间线目录
-组织材料
-页面标题要抢眼球
-页面文字要简洁
-删除废话
-挖关键词
-不用标点断句
-内容有结构
-好材料要视觉化
-抽象信息具象化
-强调关键字</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>iscroll-5学习笔记</title>
-      <link href="/jinguodong-blog/2015/02/iscroll-5/"/>
-      <pubDate>2015-02-12T00:00:00+08:00</pubDate>
-      <author>guodong.j</author>
-      <guid>/jinguodong-blog/2015/02/iscroll-5</guid>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>提高前段开发效率的那些事(转载)</title>
-      <link href="/jinguodong-blog/2015/02/Effective-FrontPart/"/>
-      <pubDate>2015-02-12T00:00:00+08:00</pubDate>
-      <author>guodong.j</author>
-      <guid>/jinguodong-blog/2015/02/Effective-FrontPart</guid>
-      <content:encoded><![CDATA[<p>转载自：<a href="http://www.kuqin.com/shuoit/20150205/344733.html">提高前段开发效率的那些事</a></p>
-
-<h2>选一个好用的编辑器，并熟练使用她（他）</h2>
-
-<p>在我看来好用的编辑器至少有以下功能</p>
-
-<ol>
-<li>语法高亮</li>
-<li>括号匹配</li>
-<li>能快速定位</li>
-<li>快速打开文件</li>
-<li>在文件中查找</li>
-<li>在文件夹中查找</li>
-<li>跳至某一行</li>
-<li>能安装插件</li>
-</ol>
-
-
-<h2>能熟练用浏览器进行调试</h2>
-
-<p>主要包括</p>
-
-<ol>
-<li>审查元素</li>
-<li>打断点和条件断点</li>
-<li>改变元素的状态，例如：hover,focus</li>
-<li>熟练的使用浏览器的控制台</li>
-</ol>
-
-
-<h2>确定项目模板</h2>
-
-<p>(试用了一下，感觉不太好用)
-问题：
-1. 是不是这个项目的最大贡献就是解决了index.html的兼容性问题？</p>
-
-<p>推荐在<a href="http://www.bootcss.com/p/html5boilerplate/">HTML5 BOILERPLATE</a>上做一些自己的定制。
-如果是移动端的项目，推荐用MOBILE BOILERPLATE。</p>
-
-<h2>能快速的生成模板项目</h2>
-
-<p>推荐使用Yo。(没找到)</p>
-
-<h2>创建一个项目的组件页</h2>
-
-<p>可以参考bootstrap的。见<a href="http://v3.bootcss.com/components/">这里</a></p>
-
-<h2>积累一些的高质量的常用第三方组件，并自己写一些使用组件的demo</h2>
-
-<p>网上总是不缺各种第三方组件。其中不乏很多带很多坑的组件。所以，发现高质量的组件，那就赶紧mark吧。我积累了一些，见<a href="https://github.com/iamjoel/front-end-plugins">这里</a>。</p>
-
-<p>虽然很多组件都有官方写的demo。但看官方的demo总是需要花一些时间去理解。我的做法是，理解了官方的demo后，自己也写一些demo。那以后再次使用时，就可以看自己写的demo了。</p>
-
-<h2>积累些常用的代码片段</h2>
-
-<p>类似http://css-tricks.com/snippets/。</p>
-
-<p>如果编辑器是用的sublime的话，可以创建代码片段(snippets)。要再用的时候，只需输入几个键，就可以将代码片段输出。</p>
-
-<h2>积累的一些前段技术文献</h2>
-
-<ol>
-<li><a href="http://www.w3cplus.com/">W3CPlus</a></li>
-<li><a href="http://www.w3cplus.com/source/10-best-Parallax-Scrolling-plugin.html">10个优秀视差滚动插件</a></li>
-</ol>
-
-
-<h2>其他</h2>
-
-<p>还有一些，待探究</p>
-
-<p>项目的依赖管理(bower之类)
-预编译（less，coffee之类），后编译（postcss之类）
-GTD（Get things done）
-最后，推荐一个Chrome插件livestyle。有了它，不用刷新，在chrome中改的css会同步修改到文件，在文件中修改的css也会同步到浏览器。</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>精彩绝伦的jQuery</title>
-      <link href="/jinguodong-blog/2015/02/Smashing-jQuery/"/>
-      <pubDate>2015-02-09T00:00:00+08:00</pubDate>
-      <author>guodong.j</author>
-      <guid>/jinguodong-blog/2015/02/Smashing-jQuery</guid>
-      <content:encoded><![CDATA[<h2>需要解决的问题</h2>
-
-<ol>
-<li>鼠标滚动事件处理。</li>
-<li>图片块区滚动效果处理。</li>
-<li>JavaScript实现网站模块式开发。</li>
-</ol>
-
-
-<h1>第一部分 简介</h1>
-
-<h1>第二部分 jQuery基础</h1>
-
-<p>主要内容：</p>
-
-<ol>
-<li>jQuery核心：选择器、过滤器及CSS</li>
-<li>事件</li>
-<li>用特效为Web站点添色</li>
-</ol>
-
-
-<h2>第3章 jQuery核心：选择器、过滤器及CSS</h2>
-
-<pre><code>再补充
-</code></pre>
-
-<h2>第4章 事件</h2>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>jQuery基础教程(第3版)</title>
-      <link href="/jinguodong-blog/2015/02/Learning-jQuery/"/>
-      <pubDate>2015-02-08T00:00:00+08:00</pubDate>
-      <author>guodong.j</author>
-      <guid>/jinguodong-blog/2015/02/Learning-jQuery</guid>
-      <content:encoded><![CDATA[<h2>需要解决的问题</h2>
-
-<ol>
-<li>带发掘。</li>
-</ol>
-
-
-<h2>第1章 jQuery入门</h2>
-
-<h2>第2章 选择元素</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>CSS和XPath选择符</li>
-<li>jQuery独有的自定义选择符</li>
-<li>jQuery的DOM遍历方法</li>
-</ol>
-
-
-<h3>$()函数</h3>
-
-<p>基本的选择符</p>
-
-<p>|| <em>选择符</em> || <em>CSS</em> || <em>jQuery</em> || <em>说明</em> ||
-|| 标签名 || p {} || $('p') || 取得文档中所有的段落 ||
-|| ID || #some-id {} || $('#some-id') || 取得文档中ID为some-id的一个元素 ||
-|| 类 || .some-class {} || #('.some-class') || 取得文档中类为some-class的所有元素 ||</p>
-
-<h2>第3章 事件</h2>
-
-<h3>本章内容</h3>
-
-<h3>带着问题学习</h3>
-
-<ol>
-<li>捕捉滚动鼠标滑轮事件</li>
-<li>禁止事件</li>
-<li>事件触发原理</li>
-</ol>
-
-
-<h3>在页面加载后执行任务</h3>
-
-<ol>
-<li>代码执行的时机选择</li>
-</ol>
-
-
-<p>$(document).ready()</p>
-
-<blockquote><p>什么是加载完成
-  一般来书，使用$(document).ready()要由于使用onload()事件处理程序，但必须要明确一点的是，
-  因为支持文件可能还没有加载完成，所以类似图像的高度和宽度这样的属性此时则还不一定会有效。
-  如果需要访问这些属性，就需要选择实现一个onload事件处理程序($(document).load())。</p></blockquote>
-
-<ol>
-<li>缩短代码的简写方式</li>
-</ol>
-
-
-<p>$(docuemnt).ready(function(){
-    ...
-});</p>
-
-<p>等同于(万恶的...)</p>
-
-<p>$(function(){
-    ...
-});</p>
-
-<h2>第5章 操作DOM</h2>
-
-<h3>操作属性</h3>
-
-<p>操作class属性的方法：</p>
-
-<ol>
-<li>.addClass() 创建或增加这个属性</li>
-<li>.removeClass() 删除或缩短该属性</li>
-<li>.toggleClass() 交替的添加和移除一个类</li>
-</ol>
-
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>SAE开发记录</title>
-      <link href="/jinguodong-blog/2015/02/SAE/"/>
-      <pubDate>2015-02-07T00:00:00+08:00</pubDate>
-      <author>guodong.j</author>
-      <guid>/jinguodong-blog/2015/02/SAE</guid>
-      <content:encoded><![CDATA[<h2>SAE</h2>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>JavaScript高级程序设计（第三版）</title>
-      <link href="/jinguodong-blog/2015/02/Professional-JavaScript/"/>
-      <pubDate>2015-02-07T00:00:00+08:00</pubDate>
-      <author>guodong.j</author>
-      <guid>/jinguodong-blog/2015/02/Professional-JavaScript</guid>
-      <content:encoded><![CDATA[<h2>需要解决的问题</h2>
-
-<ol>
-<li>鼠标滚动事件处理。</li>
-<li>图片块区滚动效果处理。</li>
-<li>JavaScript实现网站模块式开发。</li>
-</ol>
-
-
-<h2>第一章 JavaScript简介</h2>
-
-<h3>DOM级别</h3>
-
-<p>DOM1级：</p>
-
-<pre><code>包括DOM核心（DOM Core）和DOM HTML两个模块。其中DOM核心规定的是如何映射基于XML的文档结构，一边对文档中任意部分的访问和操作。DOM HTML模块则在DOM核心的基础上加以扩展，添加了针对HTML的对象和方法。
-</code></pre>
-
-<p>DOM2级：</p>
-
-<pre><code>DOM2级在原来的基础上又扩充了鼠标和用户界面事件、范围、遍历（迭代DOM文档的方法）等细分模块，而且通过对象接口增加了对CSS的支持。
-</code></pre>
-
-<p>DOM2级引入了下列新模块：</p>
-
-<blockquote><ol>
-<li>DOM视图（DOM Views）：定义了跟踪不同文档（例如，应用CSS之前和之后的文档？）视图的借口。</li>
-<li>DOM事件（DOM Events）：定义了事件和事件处理的接口。</li>
-<li>DOM样式（DOM Style）：定义了基于CSS为元素应用样式的接口。</li>
-<li>DOM遍历和范围（DOM Traversal and Range）：定义了遍历和操作文档树的接口。</li>
-</ol>
-</blockquote>
-
-<p>DOM3级：</p>
-
-<pre><code>进一步扩展了DOM，引入了以统一方式加载和保存文档的方法---在DOM加载和保存（DOM Load and Save）模块中定义；新增验证文档的方法---在DOM验证（DOM Validation）模块中定义）等。
-</code></pre>
-
-<h3>浏览器对象模型（BOM）</h3>
-
-<pre><code>根本上讲，BOM只处理浏览器窗口和框架；但人们习惯把所有针对浏览器的JS扩展都算做BOM的一部分。
-</code></pre>
-
-<p>BOM的一些扩展功能：</p>
-
-<ol>
-<li>弹出新浏览器窗口的功能；</li>
-<li>移动、缩放和关闭浏览器窗口的功能；</li>
-<li>提供浏览器详细信息的navigator对象；</li>
-<li>提供浏览器所加载页面下的详细信息的location对象；</li>
-<li>提供用户显示器分辨率详细信息的screen对象；</li>
-<li>对cookies的支持；</li>
-<li>想XMLHttpRequest和IE的ActiveXObject这样的自定义对象。</li>
-</ol>
-
-
-<h3>小结（2015-02-07）</h3>
-
-<p>JavaScript有以下三个不同的部分组成：</p>
-
-<ol>
-<li>ECMAScript，提供核心语言功能；</li>
-<li>文档对象模型DOM，提供访问和操作页面内容的方法和接口；</li>
-<li>浏览器对象模型，提供与浏览器交互的方法和接口。</li>
-</ol>
-
-
-<h2>第二章 在HTML中使用JavaScript</h2>
-
-<pre><code>&lt;script type="text/javascript" src="jjj.js"&gt;&lt;/script&gt;
-
-？？？后续补充
-</code></pre>
-
-<h2>第三章 基本概念</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>语法</li>
-<li>数据类型</li>
-<li>流控制语句</li>
-<li>函数</li>
-</ol>
-
-
-<h3>带着问题学习</h3>
-
-<ol>
-<li><p>函数的定义：</p>
-
-<p> 基本形式：
- function funcName(arg1, arg2){
-     statements
- }
- 理解参数：</p>
-
-<ol>
-<li>函数体内可以通过arguments对象来访问这个参数数组，从而获取传递给函数的每一个参数</li>
-<li>没有传递值的命名参数将自动被赋予undefined值（定义了变量但是没有初始化）。</li>
-</ol>
-</li>
-<li><p>for in 循环的使用：</p>
-
-<p> for-in是一种精准的迭代语句，用来枚举对象的属性。
- for (var param_name in expression){
-     statements;
- }</p>
-
-<p> ？？？后续补充</p></li>
-</ol>
-
-
-<h2>第四章 变量、作用域和内存问题</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>理解基本类型和引用类型的值</li>
-<li>理解执行环境</li>
-<li><p>理解垃圾收集</p>
-
-<p> ？？？后续补充</p></li>
-</ol>
-
-
-<h2>第五章 引用类型</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>使用对象</li>
-<li>创建并操作数组</li>
-<li>理解基本的JS类型</li>
-<li><p>使用基本类型和基本包装类型</p>
-
-<p> ？？？后续补充</p></li>
-</ol>
-
-
-<h2>第六章 面向对象的程序设计</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>理解对象属性</li>
-<li>理解并创建对象</li>
-<li><p>理解继承</p>
-
-<p> ？？？后续补充</p></li>
-</ol>
-
-
-<h2>第七章 函数表达式</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>函数表达式的特征</li>
-<li>使用函数实现递归</li>
-<li><p>使用闭包定义私有变量</p>
-
-<p> ？？？ 后续补充</p></li>
-</ol>
-
-
-<h2>第八章 BOM</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>理解window对象————BOM的核心</li>
-<li>控制窗口、框架和弹出窗口</li>
-<li>利用location对象中的页面信息</li>
-<li><p>使用navigator对象了解浏览器</p>
-
-<p> ？？？后续补充</p></li>
-</ol>
-
-
-<h2>第九章 客户端检测</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>使用能力检测</li>
-<li>用户代理检测的历史</li>
-<li><p>选择检测方式</p>
-
-<p> ？？？后续补充</p></li>
-</ol>
-
-
-<h2>第十章 DOM</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>理解包含不同层次节点的DOM</li>
-<li>使用不同的节点类型</li>
-<li><p>克服浏览器兼容性问题及各种陷阱</p>
-
-<p> ？？？后续补充</p></li>
-</ol>
-
-
-<h2>第十一章 DOM扩展</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>理解Selectors API</li>
-<li>使用HTML5 DOM扩展</li>
-<li><p>使用专有的DOM扩展</p>
-
-<p> ？？？马上补充</p></li>
-</ol>
-
-
-<h2>第十二章 DOM2和DOM3</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>DOM2和DOM3的变化</li>
-<li>操作样式的DOM API</li>
-<li><p>DOM遍历与范围</p>
-
-<p> ？？？后续补充</p></li>
-</ol>
-
-
-<h2>第十三章 事件</h2>
-
-<h3>本章内容</h3>
-
-<ol>
-<li>理解事件流</li>
-<li>使用事件处理程序</li>
-<li>不同的事件类型</li>
-</ol>
-
-
-<h3>事件流</h3>
-
-<pre><code>事件流概念分为两种：事件冒泡流（被普遍支持）；事件捕获流。
-</code></pre>
-
-<h4>DOM事件流</h4>
-
-<p><img src="http://www.17jquery.com/uploads/allimg/c110106/12942Y5150Z-550T.jpg" alt="" /></p>
-
-<h3>事件处理程序</h3>
-
-<h4>HTML事件处理程序：</h4>
-
-<pre><code>&lt;input type="button" value="Click Me" on click="alert('Clicked')" /&gt;
-由于onclick特性将JavaScript代码作为其值来定义的。因此不能在其中使用未经转义的HTML语法字符，如：&amp;, "", &lt;, &gt;。
-</code></pre>
-
-<p>这样指定事件处理程序具有一些独到之处。首先，会创建一个封装着元素属性值的函数。这个函数中有一个局部变量event，也就是事件对象。</p>
-
-<pre><code>&lt;input type="button" value="click me", onclick="alert(event.type)"/&gt;
-</code></pre>
-
-<p>在这个函数内部，this值等于事件的目标元素。</p>
-
-<p>关于这个动态创建的函数，另一个有意思的地方是它扩展作用域的方式。</p>
-
-<pre><code>function(){
-    with(document){
-        with(this){
-
-        }
-    }
-}
-&lt;input type="button" value="click me", onclick="alert(value)"/&gt;
-</code></pre>
-
-<p>缺点：有两个。
-+ 存在时差问题。</p>
-
-<pre><code>通过try-catch块解决。
-&lt;input type="button" value="click me", onclick="try{showMsg();}catch(ex){}"/&gt;
-</code></pre>
-
-<ul>
-<li>这样扩展事件处理程序的作用域链在不同浏览器中会导致不同结果</li>
-<li>通过HTML指定事件处理程序的最后一个缺点是HTML与JavaScript代码紧密耦合。</li>
-</ul>
-
-
-<h4>DOM0级事件处理程序</h4>
-
-<p>通过JavaScript指定时间处理程序的传统方式，将一个函数赋值给一个事件处理程序属性。</p>
-
-<pre><code>var btn = document.getElementById("myBtn");
-btn.onclick = function(){
-    alter("Clicked");
-}
-</code></pre>
-
-<p>使用DOM0级方法指定的事件处理程序被认为是元素的方法。因此，这时候的事件处理程序是在元素的作用域中运行，程序中的this引用当前元素。</p>
-
-<pre><code>var btn = document.getElementById("myBtn");
-btn.onclick = function(){
-    alter(this.id);
-}
-</code></pre>
-
-<p>也可以删除DOM0级方法指定的事件处理程序：
-    btn.onclick = null;</p>
-
-<h4>DOM2级事件处理程序</h4>
-
-<p>提供两个方法：用于指定和删除事件处理程序的操作，addEventListener()和removeEventListener()。所有DOM节点都包含这两个方法，并且它们都接受3个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。最后的这个布尔值如果为true，表示在捕获阶段调用事件处理程序；如果是false，表示在冒泡阶段调用事件处理程序。</p>
-
-<p>通过addEventListener()添加的事件处理程序只能使用removeEventListener()来移除；</p>
-
-<p>大多数情况下，布尔值应设置为false，最大限度的兼容各种浏览器。</p>
-
-<pre><code>IE9, Firefox, Safari, Chrome和Opera支持DOM2级事件处理程序。
-</code></pre>
-
-<h4>IE事件处理程序</h4>
-
-<p>IE实现了DOM中类似的两个方法，attachEvent()和detachEvent()。这两个方法接受相同的两个参数：事件处理程序名称与事件处理程序函数。由于IE8及更早的版本只支持事件冒泡，所以通过attachEvent()添加的事件处理程序都会被添加到冒泡阶段。</p>
-
-<pre><code>var btn = document.getElementById("myBtn");
-btn.attachEvent("onclick", function(){
-    alter(this.id);
-});
-</code></pre>
-
-<p>在IE中使用attachEvent()与使用DOM0级方法的主要区别在于事件处理程序的作用域。</p>
-
-<pre><code>在使用attachEvent()方法的情况下，事件处理程序会在全局作用域中进行，因此this和window相同。
-
-addEventListener()与attachEvent()类似，可以用来为一个元素添加多个事件处理程序。但是attachEvent()以添加它们的相反的顺序执行。
-</code></pre>
-
-<h4>跨浏览器的事件处理程序</h4>
-
-<p>要确保处理事件的代码能在大多数浏览器下一致的运行，只需要关注冒泡阶段。</p>
-
-<pre><code>var EventUtil= {
-    addHandler: function(element, type, handler){
-        if(element.addEventListener){
-            element.addEventLister(type, handler, false);
-        }else if(element.attachEvent){
-            element.attachEvent("on" + type, handler);
-        }else{
-            element["on"+type] = handler;
-        }
-    },
-    removeHandler: function(element, type, handler){
-        if(element.removeEventListener){
-            element.removeEventListener(type, handler, false);
-        }else if(element.detachEvent){
-            element.detachEvent("on" + type, handler);
-        }else{
-            element["on" + type] = null;
-        }
-    }
-}
-</code></pre>
-
-<p>注意： DOM0级对每个事件只支持一个事件处理程序。</p>
-
-<h3>事件对象</h3>
-
-<blockquote><p>在触发DOM上的某个事件时，会产生一个事件对象event，这个对象包含着所有与事件有关的信息。
-包括事件的元素、事件的类型以及其他与特定事件相关的信息。</p></blockquote>
-
-<h4>DOM中的事件对象</h4>
-
-<p>|属性方法|类型|读/写|说明|
-|:------:|:--:|:---:|:--:|
-|bubbles|Boolean|只读|表明事件是否冒泡|
-|currentTarget|Element|只读|其事件处理程序当前正在处理事件的那个元素|
-|preventDefault()|Function|只读|取消事件的默认行为。如果cancelable是true，则可以使用这个方法|
-|stopPropagation()|Function|只读|取消事件的进一步捕获或冒泡，同时阻止任何事件处理程序被调用（DOM3级事件中新增）|
-|target|Element|只读|事件的目标|
-...待添加</p>
-
-<p>在事件处理程序内部，对象this始终等于currentTarget的值，而target则只包含事件的实际目标。</p>
-
-<p>如果需要通过一个函数处理多个事件时，可以通过type属性。</p>
-
-<pre><code>var btn = document.getElementById("myBtn");
-var handler = function(event){
-    switch(event.type){
-        case "click":
-            break;
-        case "mouseover":
-            break;
-        case "mouseout":
-            break;
-    }
-};
-btn.onclick = handler;
-btn.onmouseover = handler;
-btn.onmouseout = handler;
-</code></pre>
-
-<blockquote><p>要阻止特定事件的默认行为，可以重用preventDefault()方法。例如，链接的默认行为就是在被单击时会导航到其href特定指定的URL。</p>
-
-<p>只有cancelable是行为true是，才可以使用preventDefault()来取消其默认行为。</p>
-
-<p>另外，stopPropagation()方法用于立即停止事件在DOM层次中的传播。</p></blockquote>
-
-<h4>IE中的事件对象</h4>
-
-<p>待添加</p>
-
-<h4>跨浏览器的事件对象</h4>
-
-<pre><code>var EventUtil = {
-    addHandler: function(element, type, handler){
-        ...
-    },
-    getEvent: function(event){
-        return event? event: window.event;
-    },
-    getTarget: function(event){
-        return event.target || event.srcElement;
-    },
-    preventDefault: function(event){
-        if(event.preventDefault){
-            event.preventDefault();
-        }else{
-            event.returnValue = false;
-        }
-    },
-
-    removeHandler: function(element, type, handler){
-        ...
-    },
-
-    stopPropagation: function(event){
-        if(event.stopPropagation){
-            event.stopPropagation();
-        }else{
-            event.cancelBubble = true;
-        }
-    }
-};
-</code></pre>
-
-<h3>事件类型</h3>
-
-<p>类型归纳：</p>
-
-<ol>
-<li>UE事件，当用户与页面上的元素交互式触发；</li>
-<li>焦点事件，当元素获得或失去焦点时触发；</li>
-<li>鼠标事件，当用户通过鼠标在页面上执行操作时触发；</li>
-<li>滚轮事件，当使用鼠标滚轮时触发；</li>
-<li>文本事件，当在文档中输入文本时触发；</li>
-<li>键盘事件，当用户通过键盘在页面上执行操作时触发；</li>
-<li>合成事件，</li>
-<li>变动事件，当底层DOM结构发生变化时触发。</li>
-</ol>
-
-
-<h4>UI事件</h4>
-
-<h3>内存和性能</h3>
-
-<h3>模拟事件</h3>
-
-<h3>小结</h3>
-
-<h3>带着问题学习</h3>
-
-<ol>
-<li>利用鼠标的滚动事件实现整页滚动效果。</li>
-<li>iscroll插件，内部元素拖拽影响到外部元素的拖拽，禁止拖拽事件外传？</li>
-<li><a href="http://www.w3cplus.com/source/10-best-Parallax-Scrolling-plugin.html">10个优秀视差滚动插件</a></li>
-</ol>
-
-
-<h2>表单脚本</h2>
-
-<h2>使用Canvas绘图</h2>
-
-<h2>HTML5脚本编程</h2>
-
-<h2>错误处理与调试</h2>
-
-<h2>JavaScript与DML</h2>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>JavaScript DOM编程艺术</title>
-      <link href="/jinguodong-blog/2015/02/JS-DOM/"/>
-      <pubDate>2015-02-01T00:00:00+08:00</pubDate>
-      <author>guodong.j</author>
-      <guid>/jinguodong-blog/2015/02/JS-DOM</guid>
-      <content:encoded><![CDATA[<h2>第一章 JavaScript简史</h2>
-
-<h3>JavaScript的由来：</h3>
-
-<pre><code>由Netscape与Sun公司合作开发，也叫做ECMAScript语言。
-</code></pre>
-
-<h3>DHTML(HTML+CSS+JS)</h3>
-
-<p>背后的含义：</p>
-
-<blockquote><ol>
-<li>利用HTML把网页标记为各种元素。</li>
-<li>利用CSS设置元素样式和它们的显示位置。</li>
-<li>利用JSavaScript实时地操控页面和改变样式。</li>
-</ol>
-</blockquote>
-
-<h3>DOM(文档对象模型)</h3>
-
-<p>DOM是一种API，一个与系统平台和编程语言无关的接口。</p>
-
-<h2>第二章 JavaScript语法</h2>
-
-<h3>准备工作</h3>
-
-<pre><code>最好将&lt;script&gt;标签放到HTML文档的最后，&lt;/body&gt;标签之前。
-这样能是浏览器更快的加载。
-</code></pre>
-
-<h3>语法</h3>
-
-<ol>
-<li><p>语句</p>
-
-<p> 建议在每条语句的末尾都加上一个分号，一种良好的编程习惯：
- first statement;
- second statement;</p></li>
-<li><p>注释</p>
-
-<p> // 注释是个好习惯。
- /<em> 好习惯
-     好习惯 </em>/
- &lt;!-- 好习惯</p></li>
-<li><p>变量</p></li>
-</ol>
-
-
-<blockquote><ol>
-<li>提前声明变量，是一种良好的编程习惯。</li>
-<li>变量和其他语法元素的名字都是区分字母大小写的。</li>
-<li>不容许变量名中包括空格或标点符号。</li>
-<li>变量名容许包含字幕、数组、美元符号和下划线。</li>
-<li>驼峰式是函数名、方法名和对象属性名命名的首选格式。</li>
-</ol>
-</blockquote>
-
-<h3>数据类型</h3>
-
-<ul>
-<li>字符串</li>
-<li>数值</li>
-<li>布尔值</li>
-<li>数组+关联数组</li>
-<li>对象</li>
-</ul>
-
-
-<h3>操作</h3>
-
-<ul>
-<li>算数操作</li>
-</ul>
-
-
-<h3>条件语句</h3>
-
-<ul>
-<li>if (true) {};</li>
-<li>比较操作符
--- 相等操作符==认为空字符串与false的含义相同
--- 全等操作符===会执行更严格的比较，不仅比较值，也会比较变量的类型。</li>
-<li>逻辑操作符</li>
-</ul>
-
-
-<h3>循环语句</h3>
-
-<ul>
-<li>while循环</li>
-<li>for循环</li>
-</ul>
-
-
-<h3>函数</h3>
-
-<pre><code>function name(arg1, arg2){
-    statement;
-    return res;
-}
-</code></pre>
-
-<h3>变量的作用域</h3>
-
-<p>局部变量：函数内作用域。</p>
-
-<pre><code>只用好的编程习惯，在第一次对某个变量赋值时，应该用var对其作出声明。
-</code></pre>
-
-<h3>对象</h3>
-
-<p>方法和属性</p>
-
-<pre><code>var jeremy = new Person();
-jeremy.name = "name";
-jeremy.age = 32;
-</code></pre>
-
-<ol>
-<li><p>内建对象</p>
-
-<p> var beatles = new Array();
- var num = 7.651;
- var num = Math.round(num);
- var = current_time = new Date();
- var today = current_time.getDay();</p></li>
-<li><p>宿主对象</p>
-
-<p> 一些已经预先定义好的其他对象，这些对象不是都有JavaScript语言本身而是由它的运行环境提供。比如Web应用中的浏览器。</p>
-
-<p> 宿主对象包括document, From, Image和Element等。</p></li>
-</ol>
-
 ]]></content:encoded>
     </item>
     
