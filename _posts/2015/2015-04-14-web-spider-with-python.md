@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [Python]网络爬虫学习笔记(转自：汪海blog)
+title: Python-网络爬虫学习笔记(转自：汪海blog)
 categories:
 - 爬虫
 tags:
