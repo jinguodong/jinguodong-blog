@@ -358,10 +358,10 @@ tags:
 
     // 多个页面之间的数据交换
     // index.php
-    setcookie('name', 'jikexueyuan');
+    setcookie('name', 'jikexueyuan'); // 创建Cookie
     header('Location:a.php');
     // a.php
-    echo _COOKIE['name'];
+    echo _COOKIE['name']; // 获得Cookie
 
     // 与JS程序做数据共享
     // index.php
@@ -383,7 +383,9 @@ tags:
     // index.php
     session_start(); // 启用session
     echo session_id();
-    $_SESSION['name'] = 'jikexueyuan';
+    $_SESSION['name'] = 'jikexueyuan'; // 创建session
+    unset($_SESSION['name']); // 立即清除session
+    unset($_SESSION); // 立即清除全部session
     session_destroy(); // 清除Session
     header("Location:a.php");
 
